@@ -1,1 +1,1 @@
-# FuelQuotePridictor-T6
+# FuelQuotePredictor-T6
