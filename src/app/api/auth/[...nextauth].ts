@@ -1,5 +1,9 @@
-import NextAuth from "next-auth/next";
-import { config } from "../../../../auth";
+import NextAuth from "next-auth"
 
-const handler = NextAuth(config)
-export { handler as GET, handler as POST }
+export default NextAuth({
+  callbacks: {
+    session({ session, token, user }) {
+      return session // The return type will match the one returned in `useSession()`
+    },
+  },
+})

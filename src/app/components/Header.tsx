@@ -1,9 +1,11 @@
 "use client";
 import React, { useRef, useEffect } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
-type Props = {}
+type Props = {};
 
 export default function Header({}: Props) {
+  // onLoad Animation
   const homeRef = useRef<HTMLDivElement>(null);
   const accountRef = useRef<HTMLDivElement>(null);
 
@@ -20,21 +22,38 @@ export default function Header({}: Props) {
   }, []);
 
   return (
-    <header className="item-start text-md sticky top-0 z-50 mx-auto flex max-w-6xl justify-between p-5 xl:items-center">
+    <header
+      className="item-start text-md sticky top-0 z-50 mx-auto flex max-w-6xl items-center justify-between 
+      p-5 tracking-widest"
+    >
       <div
-        ref={homeRef} 
-        className="-ml-[100px] flex flex-row items-center space-x-2 opacity-0 transition-all duration-1000">
-        <div>Fuel Quote Predictor</div>
+        ref={homeRef}
+        className="-ml-[100px] flex flex-row items-center space-x-4 text-2xl font-semibold text-white
+        opacity-0 transition-all duration-700"
+      >
+        <p>FUEL QUOTE PREDICTOR .</p>
       </div>
 
       <div
         ref={accountRef}
-        className="-mr-[100px] flex cursor-pointer flex-row items-center space-x-2 opacity-0 
-        transition-all duration-1000"
+        className="-mr-[100px] flex cursor-pointer flex-row items-center space-x-4 opacity-0 
+        transition-all duration-700"
       >
-        <div>Account</div>
-        <div>History</div>  
+        <button
+          className="rounded-full border-indigo-500/50 bg-indigo-500/50 px-6 py-2 text-sm
+          uppercase tracking-widest text-white transition-colors hover:border-indigo-500
+          hover:bg-indigo-500"
+        >
+          LOG IN
+        </button>
+        <button
+          className="rounded-full border-indigo-500/50 bg-indigo-500/50 px-6 py-2 text-sm
+          uppercase tracking-widest text-white transition-colors hover:border-indigo-500
+          hover:bg-indigo-500"
+        >
+          SIGN UP
+        </button>
       </div>
     </header>
-  )
+  );
 }
