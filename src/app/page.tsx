@@ -1,12 +1,13 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import Form from "./components/Form";
 
 export default function Home() {
   return (
     <div>
       <Header />
-      <Hero />
+      {/* <Hero /> */}
+      {/* <Profile /> */}
+      <QuoteForm />
     </div>
   );
 }

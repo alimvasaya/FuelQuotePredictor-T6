@@ -34,25 +34,14 @@ export default function Header({}: Props) {
         <p>FUEL QUOTE PREDICTOR .</p>
       </div>
 
+      {/* Header Buttons */}
       <div
         ref={accountRef}
         className="-mr-[100px] flex cursor-pointer flex-row items-center space-x-4 opacity-0 
         transition-all duration-700"
       >
-        <button
-          className="rounded-full border-indigo-500/50 bg-indigo-500/50 px-6 py-2 text-sm
-          uppercase tracking-widest text-white transition-colors hover:border-indigo-500
-          hover:bg-indigo-500"
-        >
-          LOG IN
-        </button>
-        <button
-          className="rounded-full border-indigo-500/50 bg-indigo-500/50 px-6 py-2 text-sm
-          uppercase tracking-widest text-white transition-colors hover:border-indigo-500
-          hover:bg-indigo-500"
-        >
-          SIGN UP
-        </button>
+        <button className="butoon">X</button>
+        <button className="butoon">Y</button>
       </div>
     </header>
   );

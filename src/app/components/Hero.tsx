@@ -39,7 +39,7 @@ export default function Hero({}: Props) {
       className="relative mx-auto flex h-screen max-w-7xl flex-col items-center justify-evenly px-10
       text-center opacity-0 transition-opacity duration-500"
     >
-      {/* Log In */}
+      {/* Log In Form */}
       <div
         ref={loginRef}
         className="opacity-1 absolute top-24 z-10 -ml-[0px] flex flex-col transition-all duration-700
@@ -48,24 +48,14 @@ export default function Hero({}: Props) {
         <h1 className="text-2xl font-semibold text-white">LOG IN</h1>
 
         <form className="mx-auto mt-10 flex w-fit flex-col space-y-2">
-          <div>
-            <input type="email" placeholder="Email" className="input-field" />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              className="input-field"
-            />
-          </div>
+          <input type="email" placeholder="Email" className="input-field" />
+          <input
+            type="password"
+            placeholder="Password"
+            className="input-field"
+          />
 
-          <button
-            className="rounded-full border-indigo-500/50 bg-indigo-500/50 px-6 py-2 text-sm
-            uppercase tracking-widest text-white transition-colors hover:border-indigo-500
-            hover:bg-indigo-500"
-          >
-            Sign In
-          </button>
+          <button className="butoon">Sign In</button>
         </form>
 
         <div className="mt-4">
@@ -89,7 +79,7 @@ export default function Hero({}: Props) {
         </div>
       </div>
 
-      {/* Sign Up */}
+      {/* Sign Up Form */}
       <div
         ref={signupRef}
         className="absolute top-24 z-0 -mr-[400px] flex flex-col opacity-0 transition-all duration-700
@@ -98,31 +88,14 @@ export default function Hero({}: Props) {
         <h1 className="text-2xl font-semibold text-white">SIGN UP</h1>
 
         <form className="mx-auto mt-10 flex w-fit flex-col space-y-2">
-          <div>
-            <input
-              type="text"
-              placeholder="Full name"
-              className="input-field"
-            />
-          </div>
-          <div>
-            <input type="email" placeholder="Email" className="input-field" />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              className="input-field"
-            />
-          </div>
+          <input type="email" placeholder="Email" className="input-field" />
+          <input
+            type="password"
+            placeholder="Password"
+            className="input-field"
+          />
 
-          <button
-            className="rounded-full border-indigo-500/50 bg-indigo-500/50 px-6 py-2 text-sm
-            uppercase tracking-widest text-white transition-colors hover:border-indigo-500
-          hover:bg-indigo-500"
-          >
-            Sign Up
-          </button>
+          <button className="butoon">Sign Up</button>
         </form>
 
         <div className="mt-4">
