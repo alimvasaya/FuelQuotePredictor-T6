@@ -1,21 +1,15 @@
+import Form from "./components/Forum/page";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div>
       <Header />
-      {/* <Hero /> */}
-      {/* <Profile /> */}
-      <QuoteForm />
-    </div>
-  );
-}
-
-export function Forum() {
-  return (
-    <div>
-      <Form />
+      {<Hero /> }
+      {/* <Profile />*/}
+      <Link href="components#Forum"></Link>
     </div>
   );
 }
