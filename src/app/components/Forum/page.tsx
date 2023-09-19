@@ -1,4 +1,4 @@
-// pages/forum.tsx
+
 "use client";
 import React, {useState } from "react";
 
@@ -80,7 +80,7 @@ export default function Form() {
             readOnly
           />
         </div>
-        <button type="submit" style={{ backgroundColor: "White" }}>
+        <button type="submit">
           Submit
         </button>
       </form>
