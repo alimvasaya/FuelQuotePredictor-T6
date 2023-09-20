@@ -6,34 +6,8 @@ import HistCard from "./HistCard";
 type Props = {};
 
 export default function QuoteHist({}: Props) {
+  // Sample data
   const dummyHist = [
-    {
-      deliveryDate: "00/00/0000",
-      address: "1234 addy dr",
-      city: "city",
-      state: "TX",
-      zipcode: 12345,
-      total: 123,
-      gallons: 12,
-    },
-    {
-      deliveryDate: "00/00/0000",
-      address: "1234 addy dr",
-      city: "city",
-      state: "TX",
-      zipcode: 12345,
-      total: 123,
-      gallons: 12,
-    },
-    {
-      deliveryDate: "00/00/0000",
-      address: "1234 addy dr",
-      city: "city",
-      state: "TX",
-      zipcode: 12345,
-      total: 123,
-      gallons: 12,
-    },
     {
       deliveryDate: "00/00/0000",
       address: "1234 addy dr",

@@ -3,25 +3,23 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
 
-type ProfileData = {
-  fullName: string;
-  address1: string;
-  city: string;
-  state: string;
-  zipcode: number;
-  address2: string;
-};
+type Props = {};
 
-export default function Profile({
-  fullName,
-  address1,
-  city,
-  state,
-  zipcode,
-  address2,
-}: ProfileData) {
+// type ProfileData = {
+//   username: string;
+//   fullName: string;
+//   address1: string;
+//   city: string;
+//   state: string;
+//   zipcode: number;
+//   address2: string;
+// };
+
+export default function Profile({}: Props) {
   const dummyProfile = {
+    username: "email@gmail.com",
     fullName: "First Last",
     address1: "1234 addy dr",
     city: "city",
@@ -39,11 +37,12 @@ export default function Profile({
       <FontAwesomeIcon
         icon={faUser}
         style={{ color: "#6366f1" }}
-        className="relative mx-auto h-36 w-36 rounded-full border-8 border-indigo-500 object-cover"
+        className="mx-auto h-36 w-36"
       />
 
       {/* Addresses, City, State, and Zipcode */}
       <div className="relative mx-auto flex w-80 flex-col space-y-2 text-white">
+        <p className="profile-field">{dummyProfile.username}</p>
         <p className="profile-field">{dummyProfile.fullName}</p>
         <p className="profile-field">{dummyProfile.address1}</p>
         <p className="profile-field">{dummyProfile.city}</p>
@@ -54,12 +53,14 @@ export default function Profile({
 
         <p className="profile-field">{dummyProfile.address2}</p>
 
-        <button
-          className="rounded-full bg-indigo-500/50 px-6 py-2 text-sm uppercase tracking-widest
-          text-white transition-colors hover:bg-indigo-500/60"
-        >
-          Edit
-        </button>
+        <Link to="/edit-profile">
+          <button
+            className="w-full rounded-full bg-indigo-500/50 px-6 py-2 text-sm uppercase
+            tracking-widest text-white transition-colors hover:bg-indigo-500/60"
+          >
+            Request Edit
+          </button>
+        </Link>
       </div>
     </div>
   );

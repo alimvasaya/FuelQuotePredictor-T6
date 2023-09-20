@@ -1,14 +1,7 @@
-
 import Header from "./components/Header";
-import Link from "next/link";
-
-
+import ClientPage from "./Client/page";
+import AdminPage from "./Admin/page";
 
 export default function Home() {
-  return (
-    <div>
-      <Header />
-      {/* <Profile />*/}
-    </div>
-  );
+  return <div></div>;
 }
