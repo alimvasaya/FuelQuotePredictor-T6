@@ -1,9 +1,11 @@
+// Log In and Sign Up input forms
+
 "use client";
 import React, { useRef, useEffect, HTMLAttributes } from "react";
 
 type Props = {};
 
-export default function Hero({}: Props) {
+export default function SignForm({}: Props) {
   const heroRef = useRef<HTMLElement>(null);
   const loginRef = useRef<HTMLDivElement>(null);
   const signupRef = useRef<HTMLDivElement>(null);
@@ -48,13 +50,20 @@ export default function Hero({}: Props) {
         <h1 className="text-2xl font-semibold text-white">LOG IN</h1>
 
         <form className="mx-auto mt-10 flex w-fit flex-col space-y-2">
-          <input type="email" placeholder="Email" className="input-field" />
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            className="input-field"
+            required
+          />
           <input
             type="password"
             placeholder="Password"
+            name="password"
             className="input-field"
+            required
           />
-
           <button className="butoon">Sign In</button>
         </form>
 
