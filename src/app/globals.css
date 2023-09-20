@@ -7,13 +7,21 @@
 }
 
 @layer components {
+  /* Global */
+  .butoon {
+    @apply rounded-full border-indigo-500/50 bg-indigo-500/50 px-6 py-2 text-xs uppercase tracking-widest
+    text-white transition-colors hover:border-indigo-500/70 hover:bg-indigo-500/70 lg:text-sm;
+  }
+
+  /* Input Forms */
   .input-field {
-    @apply rounded-lg border-b border-sky-500/50 bg-sky-500/50 px-6 py-3 text-gray-400 
-    placeholder-white/70 outline-none transition-all hover:border-indigo-500 focus:border-white
+    @apply rounded-lg border-b border-sky-500/50 bg-sky-500/50 px-6 py-3 text-gray-400
+    placeholder-gray-400 outline-none transition-all hover:border-white focus:border-white
     focus:text-white;
   }
-  .butoon {
-    @apply rounded-full border-indigo-500/50 bg-indigo-500/50 px-6 py-2 text-sm uppercase
-    tracking-widest text-white transition-colors hover:border-indigo-500 hover:bg-indigo-500;
+
+  /* View Profile */
+  .profile-field {
+    @apply rounded-lg border-b border-sky-500/50 bg-sky-500/50 px-6 py-3 text-white outline-none;
   }
 }
