@@ -19,7 +19,7 @@ const ClientPage = () => {
           <Route path="/profile-form" element={<ProfileForm />} />
           <Route path="/quote-form" element={<QuoteForm />} />
           <Route path="/quote-hist" element={<QuoteHist />} />
-          <Route path="/view-profile" element={<ViewProfile />} />
+          <Route path="/view-profile" element={<ViewProfile/>} />
         </Routes>
       </div>
     </Router>
