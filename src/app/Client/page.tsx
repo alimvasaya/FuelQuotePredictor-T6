@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import Header from "../components/Header";
 import HeaderAuth from "../components/HeaderAuth";
 import ProfileForm from "./Profile_forms/ProfileForm";
 import EditProfile from "./Profile_forms/EditProfile";
@@ -13,6 +14,8 @@ const ClientPage = () => {
     <Router>
       <div>
         <nav>
+          <Link to="/Client"></Link>
+          <Header />
           <HeaderAuth />
         </nav>
 
