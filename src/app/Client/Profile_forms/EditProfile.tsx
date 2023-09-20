@@ -10,7 +10,7 @@ export default function ProfileForm({}: Props) {
   return (
     <div className="flex flex-col items-center justify-center space-y-8 pt-32">
       <h1 className="text-3xl font-semibold uppercase tracking-widest text-white">
-        Complete Profile
+        Edit Profile
       </h1>
 
       <FontAwesomeIcon
@@ -26,7 +26,6 @@ export default function ProfileForm({}: Props) {
           placeholder="Full name"
           name="name"
           className="input-field"
-          required
         />
 
         {/* Addresses, City, State, and Zipcode */}
@@ -36,7 +35,6 @@ export default function ProfileForm({}: Props) {
           placeholder="Address 1"
           name="address1"
           className="input-field"
-          required
         />
         <input
           type="text"
@@ -44,7 +42,6 @@ export default function ProfileForm({}: Props) {
           placeholder="City"
           name="city"
           className="input-field"
-          required
         />
         <div className="flex space-x-2">
           <input
@@ -54,7 +51,6 @@ export default function ProfileForm({}: Props) {
             name="state"
             className="input-field w-full"
             list="stateOptions"
-            required
           />
           <datalist id="stateOptions">
             <option value=""></option>
@@ -117,7 +113,6 @@ export default function ProfileForm({}: Props) {
             name="zipcode"
             className="input-field w-full [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none
             [&::-webkit-outer-spin-button]:appearance-none"
-            required
           />
         </div>
 

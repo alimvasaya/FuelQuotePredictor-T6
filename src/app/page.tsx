@@ -1,16 +1,12 @@
-
 import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Link from "next/link";
-
-
+import ClientPage from "./Client/page";
+import AdminPage from "./Admin/page";
 
 export default function Home() {
   return (
     <div>
-      <Header />
-      {<Hero /> }
-      {/* <Profile />*/}
+      <ClientPage />
+      {/* <AdminPage /> */}
     </div>
   );
 }
