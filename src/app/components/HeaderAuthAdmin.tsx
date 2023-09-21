@@ -46,7 +46,7 @@ export default function HeaderLogin({}: Props) {
         className="-mr-[100px] flex cursor-pointer flex-row space-x-4 opacity-0 
         transition-all duration-700"
       >
-        <Link to="/quote-form">
+        <Link to="/form">
           <button className="butoon">Request Quote</button>
         </Link>
         <Link to="/quote-history">
@@ -58,8 +58,8 @@ export default function HeaderLogin({}: Props) {
         <Link to="/analytics">
           <button className="butoon">Analytics</button>
         </Link>
-        <Link to="/form">
-          <button className="butoon">Client Profiles</button>
+        <Link to="/Check_support_Tickets">
+          <button className="butoon">Support Tickets</button>
         </Link>
         <button className="butoon">Log Out</button>
       </div>
