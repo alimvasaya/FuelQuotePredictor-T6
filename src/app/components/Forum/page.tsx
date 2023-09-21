@@ -1,90 +1,94 @@
+// Request fuel quote input form
 
-"use client";
-import React, {useState } from "react";
+import React from "react";
 
-export default function Form() {
-  const [gallonsRequested, setGallonsRequested] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState("");
-  const [suggestedPrice, setSuggestedPrice] = useState("");
-  const [totalAmountDue, setTotalAmountDue] = useState("");
-  
-  const handleGallonsChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setGallonsRequested(e.target.value);
-  };
+type Props = {};
 
-  const handleDeliveryDateChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setDeliveryDate(e.target.value);
-  };
-
-  // You can fetch the suggested price from your Pricing Module here and set it using setSuggestedPrice.
-
-  const calculateTotalAmountDue = () => {
-    const gallons = parseFloat(gallonsRequested);
-    const price = parseFloat(suggestedPrice);
-    if (!isNaN(gallons) && !isNaN(price)) {
-      setTotalAmountDue((gallons * price).toFixed(2));
-    } else {
-      setTotalAmountDue("");
-    }
-  };
-
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    // You can handle the form submission here, e.g., sending data to the server.
-  };
+export default function QuoteForm({}: Props) {
+  function calculatePrice() {
+    const gallons = Number(document.getElementById("gallons")?.nodeValue);
+    let state = document.getElementById("state")?.nodeValue;
+  }
 
   return (
-    <section className="relative mx-auto flex h-screen max-w-7xl flex-col items-center justify-evenly px-10">
-    <div>
-      <h1  className="opacity-1 absolute top-24 z-10 -ml-[0px] flex flex-col transition-all duration-700
-        ease-in-out text-2xl font-semibold text-white">Fuel Quote Forum</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col space-y-2" >
-          <label>Gallons Requested:</label>
-          <input
-            type="number"
-            value={gallonsRequested}
-            onChange={handleGallonsChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Delivery Address:</label>
+    <section className="flex flex-col items-center justify-center space-y-8 pt-32">
+      <h1 className="text-3xl font-semibold uppercase tracking-widest text-white">
+        Request Fuel Quote
+      </h1>
+
+      <form className="relative mx-auto flex w-80 flex-col space-y-2">
+        <input
+          type="number"
+          id="gallons"
+          placeholder="Gallons"
+          name="gallons"
+          className="input-field [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none
+          [&::-webkit-outer-spin-button]:appearance-none"
+          required
+        />
+
+        {/* Address, City, and State */}
+        <input
+          type="text"
+          id="address1"
+          name="address1"
+          placeholder="Delivery Address"
+          className="input-field"
+          required
+          readOnly
+        />
+        <div className="flex space-x-2">
           <input
             type="text"
-            value="Client's Address" // This should come from the client profile
+            id="city"
+            placeholder="City"
+            name="city"
+            className="input-field w-full"
+            required
+            readOnly
+          />
+          <input
+            type="text"
+            id="state"
+            placeholder="State"
+            name="city"
+            className="input-field w-full"
+            required
             readOnly
           />
         </div>
-        <div>
-          <label>Delivery Date:</label>
-          <input
-            type="date"
-            value={deliveryDate}
-            onChange={handleDeliveryDateChange}
-          />
-        </div>
-        <div>
-          <label>Suggested Price / gallon:</label>
-          <input
-            type="number"
-            value={suggestedPrice}
-            readOnly
-          />
-        </div>
-        <div>
-          <label>Total Amount Due:</label>
-          <input
-            type="number"
-            value={totalAmountDue}
-            readOnly
-          />
-        </div>
-        <button type="submit">
-          Submit
-        </button>
+
+        {/* Delivery and Pricing */}
+        <input
+          type="date"
+          id="deliveryDate"
+          placeholder="Delivery Date"
+          name="deliveryDate"
+          className="input-field w-full uppercase"
+        />
+        <input
+          type="number"
+          id="suggestedPrice"
+          placeholder="Suggested Price"
+          name="suggestedPrice"
+          className="input-field w-full overflow-scroll"
+          required
+        />
+        <input
+          type="number"
+          id="totalPrice"
+          placeholder="Total Amount Due"
+          name="totalPrice"
+          className="input-field [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none
+          [&::-webkit-outer-spin-button]:appearance-none"
+          required
+          readOnly
+        />
+
+        <button className="butoon">Submit</button>
+        <button className="butoon">Cancel</button>
+        <button className="butoon">Edit</button>
       </form>
-    </div>
     </section>
   );
 }

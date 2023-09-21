@@ -42,16 +42,15 @@ const ClientProfiles = () => {
     );
   };
 
-
-    // Function to save edited data for a specific user
-    const saveData = (userId: number, field: string, value: string) => {
-        setClientUsers((prevUsers) =>
-        prevUsers.map((user) =>
-            user.id === userId ? { ...user, [field]: value } : user
-        )
-        );
-        toggleEdit(userId);
-    };
+  // Function to save edited data for a specific user
+  const saveData = (userId: number, field: string, value: string) => {
+    setClientUsers((prevUsers) =>
+      prevUsers.map((user) =>
+        user.id === userId ? { ...user, [field]: value } : user
+      )
+    );
+    toggleEdit(userId);
+  };
 
   // Function to add a new user
   const addNewUser = () => {
@@ -72,197 +71,272 @@ const ClientProfiles = () => {
   };
   // Function to delete a user
   const deleteUser = (userId: number) => {
-    setClientUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+    setClientUsers((prevUsers) =>
+      prevUsers.filter((user) => user.id !== userId)
+    );
   };
 
   return (
     <div>
-      <h1>Client Profiles</h1>
-      <table>
+      <h1 className="text-4xl text-center text-white">Client Profiles</h1>
+      <table className="table-auto border-collapse border w-full my-1.5 text-blue-200">
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Full Name</th>
-            <th>Password</th>
-            <th>Address 1</th>
-            <th>Address 2</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Zip Code</th>
-            <th>Action</th>
+            <th className="border px-4 py-2">Username</th>
+            <th className="border px-4 py-2">Full Name</th>
+            <th className="border px-4 py-2">Password</th>
+            <th className="border px-4 py-2">Address 1</th>
+            <th className="border px-4 py-2">Address 2</th>
+            <th className="border px-4 py-2">City</th>
+            <th className="border px-4 py-2">State</th>
+            <th className="border px-4 py-2">Zip Code</th>
+            <th className="border px-4 py-2">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-white">
           {clientUsers.map((user) => (
             <tr key={user.id}>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
                   <input
                     type="text"
                     value={user.username}
-                    onChange={(e) => saveData(user.id, "username", e.target.value)}
+                    onChange={(e) =>
+                      saveData(user.id, "username", e.target.value)
+                    }
+                    className="w-full"
                   />
                 ) : (
                   user.username
                 )}
               </td>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
                   <input
                     type="text"
                     value={user.fullName}
-                    onChange={(e) => saveData(user.id, "fullName", e.target.value)}
+                    onChange={(e) =>
+                      saveData(user.id, "fullName", e.target.value)
+                    }
+                    className="w-full"
                   />
                 ) : (
                   user.fullName
                 )}
               </td>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
                   <input
                     type="password"
                     value={user.password}
-                    onChange={(e) => saveData(user.id, "password", e.target.value)}
+                    onChange={(e) =>
+                      saveData(user.id, "password", e.target.value)
+                    }
+                    className="w-full"
                   />
                 ) : (
                   user.password
                 )}
               </td>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
                   <input
                     type="text"
                     value={user.address1}
-                    onChange={(e) => saveData(user.id, "address1", e.target.value)}
+                    onChange={(e) =>
+                      saveData(user.id, "address1", e.target.value)
+                    }
+                    className="w-full"
                   />
                 ) : (
                   user.address1
                 )}
               </td>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
                   <input
                     type="text"
                     value={user.address2}
-                    onChange={(e) => saveData(user.id, "address2", e.target.value)}
+                    onChange={(e) =>
+                      saveData(user.id, "address2", e.target.value)
+                    }
+                    className="w-full"
                   />
                 ) : (
                   user.address2
                 )}
               </td>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
                   <input
                     type="text"
                     value={user.city}
-                    onChange={(e) => saveData(user.id, "city", e.target.value)}
+                    onChange={(e) =>
+                      saveData(user.id, "city", e.target.value)
+                    }
+                    className="w-full"
                   />
                 ) : (
                   user.city
                 )}
               </td>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
                   <input
                     type="text"
                     value={user.state}
-                    onChange={(e) => saveData(user.id, "state", e.target.value)}
+                    onChange={(e) =>
+                      saveData(user.id, "state", e.target.value)
+                    }
+                    className="w-full"
                   />
                 ) : (
                   user.state
                 )}
               </td>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
                   <input
                     type="text"
                     value={user.zipCode}
-                    onChange={(e) => saveData(user.id, "zipCode", e.target.value)}
+                    onChange={(e) =>
+                      saveData(user.id, "zipCode", e.target.value)
+                    }
+                    className="w-full"
                   />
                 ) : (
                   user.zipCode
                 )}
               </td>
-              <td>
+              <td className="border px-4 py-2">
                 {editingRows.includes(user.id) ? (
-                    <button onClick={(e) => saveData(user.id, "username", (e.target as HTMLInputElement).value)}>Save</button>
+                  <button
+                    onClick={(e) =>
+                      saveData(
+                        user.id,
+                        "username",
+                        (e.target as HTMLInputElement).value
+                      )
+                    }
+                    className="bg-green-500 text-white px-2 py-1"
+                  >
+                    Save
+                  </button>
                 ) : (
-                    <div>
-                    <button onClick={() => toggleEdit(user.id)}>Edit</button>
-                    <button onClick={() => deleteUser(user.id)}>Delete</button>
-                    </div>
+                  <div>
+                    <button
+                      onClick={() => toggleEdit(user.id)}
+                      className="bg-blue-500 text-white px-2 py-1 mr-1"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => deleteUser(user.id)}
+                      className="bg-red-500 text-white px-2 py-1"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 )}
-                </td>
+              </td>
             </tr>
-            
           ))}
           <tr>
-            <td>
+            <td className="border px-4 py-2">
               <input
                 type="text"
                 placeholder="Username"
                 value={newUser.username}
-                onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, username: e.target.value })
+                }
+                className="w-full"
               />
             </td>
-            <td>
+            <td className="border px-4 py-2">
               <input
                 type="text"
                 placeholder="Full Name"
                 value={newUser.fullName}
-                onChange={(e) => setNewUser({ ...newUser, fullName: e.target.value })}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, fullName: e.target.value })
+                }
+                className="w-full"
               />
             </td>
-            <td>
+            <td className="border px-4 py-2">
               <input
                 type="password"
                 placeholder="Password"
                 value={newUser.password}
-                onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, password: e.target.value })
+                }
+                className="w-full"
               />
             </td>
-            <td>
+            <td className="border px-4 py-2">
               <input
                 type="text"
                 placeholder="Address 1"
                 value={newUser.address1}
-                onChange={(e) => setNewUser({ ...newUser, address1: e.target.value })}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, address1: e.target.value })
+                }
+                className="w-full"
               />
             </td>
-            <td>
+            <td className="border px-4 py-2">
               <input
                 type="text"
                 placeholder="Address 2"
                 value={newUser.address2}
-                onChange={(e) => setNewUser({ ...newUser, address2: e.target.value })}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, address2: e.target.value })
+                }
+                className="w-full"
               />
             </td>
-            <td>
+            <td className="border px-4 py-2">
               <input
                 type="text"
                 placeholder="City"
                 value={newUser.city}
-                onChange={(e) => setNewUser({ ...newUser, city: e.target.value })}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, city: e.target.value })
+                }
+                className="w-full"
               />
             </td>
-            <td>
+            <td className="border px-4 py-2">
               <input
                 type="text"
                 placeholder="State"
                 value={newUser.state}
-                onChange={(e) => setNewUser({ ...newUser, state: e.target.value })}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, state: e.target.value })
+                }
+                className="w-full"
               />
             </td>
-            <td>
+            <td className="border px-4 py-2">
               <input
                 type="text"
                 placeholder="Zip Code"
                 value={newUser.zipCode}
-                onChange={(e) => setNewUser({ ...newUser, zipCode: e.target.value })}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, zipCode: e.target.value })
+                }
+                className="w-full"
               />
             </td>
-            <td>
-              <button onClick={addNewUser}>Add</button>
+            <td className="border px-4 py-2">
+              <button
+                onClick={addNewUser}
+                className="bg-green-500 text-white px-2 py-1"
+              >
+                Add
+              </button>
             </td>
           </tr>
         </tbody>
