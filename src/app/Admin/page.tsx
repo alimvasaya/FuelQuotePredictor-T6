@@ -5,29 +5,15 @@ import QuoteHistory from "./Fuel_Quote_History/page";
 import ClientProfiles from "./Client_profiles/page";
 import Analytics from "./Analytics/page";
 import Form from "../components/Forum/page"; // Import the Form component
+import HeaderAuthAdmin from "../components/HeaderAuthAdmin";
 
 const AdminPage = () => {
   return (
     <Router>
       <div>
         <nav>
-          <ul>
-            <li>
-              <Link to="/Admin">Admin</Link>
-            </li>
-            <li>
-              <Link to="/quote-history">Fuel Quote History</Link>
-            </li>
-            <li>
-              <Link to="/client-profiles">Client Profiles</Link>
-            </li>
-            <li>
-              <Link to="/analytics">Analytics</Link>
-            </li>
-            <li>
-              <Link to="/form">Form</Link>
-            </li>
-          </ul>
+          <Link to="/Admin">Admin</Link>
+          <HeaderAuthAdmin />
         </nav>
 
         <Routes>
