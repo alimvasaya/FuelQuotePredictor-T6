@@ -60,7 +60,9 @@ export default function HeaderLogin({}: Props) {
         </Link>
         <Link to="/Check_support_Tickets">
           <button className="butoon">Support Tickets</button>
+        </Link>
         <button className="butoon">Log Out</button>
+
       </div>
     </header>
   );
