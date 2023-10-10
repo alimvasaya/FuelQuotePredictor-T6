@@ -1,13 +1,18 @@
-import Header from "./components/Header";
-import ClientPage from "./Client/page";
-import AdminPage from "./Admin/page";
-import SignForm from "./components/SignForm";
+import { options } from "./api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
 
-export default function Home() {
-  return (
-    <div>
-      <Header />
-      <SignForm />
-    </div>
-  );
+import ClientPage from "./Client/page";
+import AdminPage from "./adminPage/page";
+import PreAuth from "./components/PreAuth";
+
+export default async function Home() {
+  const session = await getServerSession(options);
+  let rolePage;
+
+  if (session?.user.role === "client") {
+    rolePage = <ClientPage />;
+  } else if (session?.user.role === "admin") {
+    rolePage = <AdminPage />;
+  }
+  return <>{session ? rolePage : <PreAuth />}</>;
 }
