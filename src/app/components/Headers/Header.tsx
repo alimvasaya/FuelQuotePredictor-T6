@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useEffect } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
-
+// import { signIn, signOut, useSession } from "next-auth/react";
+// 
 type Props = {};
 
 export default function Header({}: Props) {
