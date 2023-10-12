@@ -41,7 +41,7 @@ export const options: NextAuthOptions = {
   pages: {
     signIn: "/auth/SignForm",
     signOut: "/auth/signout",
-    newUser: "/Client/ProfileForm",
+    newUser: "/Client/completeProfile/page",
   },
   session: {
     strategy: "jwt",

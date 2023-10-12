@@ -5,15 +5,19 @@ route request to a microservice associated with its route
 each microservice has one purpose of its own
 */
 
-import { registerUser} from "../microservices/users/registerUser";
+import { registerUser } from "../microservices/users/registerUser";
 import { registerUserQuote } from "../microservices/FuelQuote/Forum_quote";
-import { Register_Fuel_Quote} from "../microservices/FuelQuote/Fuel_quote";
-import { View_Quote} from "../microservices/FuelQuote/quote";
+import { Register_Fuel_Quote } from "../microservices/FuelQuote/Fuel_quote";
+import { View_Quote } from "../microservices/FuelQuote/quote";
+import { completeProfile } from "../microservices/users/completeProfile";
 import express, { Request, Response } from "express";
 
 const router = express.Router();
 
 export const createRoute = () => {
+  router.post("/completeProfile", (req: Request, res: Response) => {
+    completeProfile(req, res);
+  });
   router.post("/signUp", (req: Request, res: Response) => {
     registerUser(req, res);
   });

@@ -1,9 +1,19 @@
+"use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Configure UserContext
 type User = {
   email: string;
   password: string;
+};
+
+type UserInfo = {
+  fullName: string;
+  address1: string;
+  city: string;
+  state: string;
+  zipcode: number;
+  address2: string;
 };
 
 type UserContextType = {
@@ -28,6 +38,7 @@ type UserProviderProps = {
 };
 
 export function UserProvider({ children }: UserProviderProps) {
+  // Set User Credentials
   const [userCred, setUserCred] = useState<User>({ email: "", password: "" });
 
   const updateUserEmail = (email: string) => {

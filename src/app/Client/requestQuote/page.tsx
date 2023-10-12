@@ -1,6 +1,4 @@
-// Request fuel quote input form
-"use client";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Session } from "next-auth";
 
 export default function QuoteForm(DataProps: { data: Session }) {
@@ -205,7 +203,9 @@ export default function QuoteForm(DataProps: { data: Session }) {
           id="totalPrice"
           placeholder="Total Amount Due"
           name="totalPrice"
-          className="input-field [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          className="input-field [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none
+          [&::-webkit-outer-spin-button]:appearance-none"
+          required
           readOnly
           defaultValue={userData.totalPrice}
           onChange={({ target }) =>

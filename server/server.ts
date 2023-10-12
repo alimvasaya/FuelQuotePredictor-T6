@@ -8,7 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
+  console.log("hi");
   res.send("hi");
 });
 
