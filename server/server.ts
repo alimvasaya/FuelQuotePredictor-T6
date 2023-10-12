@@ -1,11 +1,11 @@
 import express, { Request, Response } from "express";
-import ccrs from "cors";
+import cors from "cors";
 import { createRoute } from "./middleware/requestRouter";
 
 const PORT = 8000;
 
 const app = express();
-app.use(ccrs());
+app.use(cors());
 app.use(express.json());
 
 app.post("/", (req: Request, res: Response) => {

@@ -5,7 +5,10 @@ route request to a microservice associated with its route
 each microservice has one purpose of its own
 */
 
-import { registerUser } from "../microservices/users/registerUser";
+import { registerUser} from "../microservices/users/registerUser";
+import { registerUserQuote } from "../microservices/FuelQuote/Forum_quote";
+import { Register_Fuel_Quote} from "../microservices/FuelQuote/Fuel_quote";
+import { View_Quote} from "../microservices/FuelQuote/quote";
 import express, { Request, Response } from "express";
 
 const router = express.Router();
@@ -15,6 +18,17 @@ export const createRoute = () => {
     registerUser(req, res);
   });
 
+  router.get("/Forum_quote", (req: Request, res: Response) => {
+    registerUserQuote(req, res); // Handle retrieving fuel quotes
+  });
+
+  router.post("/add_fuel_quote", (req: Request, res: Response) => {
+    Register_Fuel_Quote(req, res); // Handle creating new fuel quotes
+  });
+
+  router.get("/quotes", (req: Request, res: Response) => {
+    View_Quote(req, res); // Handle viewing existing fuel quotes
+  });
   return router;
 };
 
