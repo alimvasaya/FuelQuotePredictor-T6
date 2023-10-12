@@ -39,7 +39,7 @@ export default function QuoteForm(DataProps: { data: Session }) {
   const calculateTotalPrice = () => {
     const gallons = parseFloat(userData.gallonsRequested);
     const suggestedPrice = parseFloat(userData.suggestedPrice);
-  
+
     if (!isNaN(gallons) && !isNaN(suggestedPrice)) {
       const total = gallons * suggestedPrice;
       console.log("Calculated Total Price:", total);
@@ -53,11 +53,10 @@ export default function QuoteForm(DataProps: { data: Session }) {
       return 0; // Return a default value, or you can choose to return null or handle the error differently.
     }
   };
- 
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (formSubmitted) {
@@ -86,14 +85,16 @@ export default function QuoteForm(DataProps: { data: Session }) {
     }
   };
 
-
   return (
     <section className="flex flex-col items-center justify-center space-y-8 pt-32">
       <h1 className="text-3xl font-semibold uppercase tracking-widest text-white">
         Request Fuel Quote
       </h1>
 
-      <form className="relative mx-auto flex w-80 flex-col space-y-2" onSubmit={handleSubmit}>
+      <form
+        className="relative mx-auto flex w-80 flex-col space-y-2"
+        onSubmit={handleSubmit}
+      >
         <input
           type="number"
           id="gallons"
@@ -101,10 +102,11 @@ export default function QuoteForm(DataProps: { data: Session }) {
           name="gallons"
           className="input-field [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           required
-          onChange={({ target }) => setUserdata({ ...userData, gallonsRequested: target.value })}
-           // Populate value from state
+          onChange={({ target }) =>
+            setUserdata({ ...userData, gallonsRequested: target.value })
+          }
+          // Populate value from state
         />
-
         {/* Address, City, and State */}
         <input
           type="text"
@@ -115,7 +117,9 @@ export default function QuoteForm(DataProps: { data: Session }) {
           required
           readOnly
           value={userData.address1} // Populate value from state
-          onChange={({ target }) => setUserdata({ ...userData, address1: target.value })}
+          onChange={({ target }) =>
+            setUserdata({ ...userData, address1: target.value })
+          }
         />
         <input
           type="text"
@@ -126,7 +130,9 @@ export default function QuoteForm(DataProps: { data: Session }) {
           required
           readOnly
           value={userData.address2} // Populate value from state
-          onChange={({ target }) => setUserdata({ ...userData, address2: target.value })}
+          onChange={({ target }) =>
+            setUserdata({ ...userData, address2: target.value })
+          }
         />
         <div className="flex space-x-2">
           <input
@@ -137,7 +143,9 @@ export default function QuoteForm(DataProps: { data: Session }) {
             className="input-field w-full"
             required
             value={userData.city} // Populate value from state
-            onChange={({ target }) => setUserdata({ ...userData, city: target.value })}
+            onChange={({ target }) =>
+              setUserdata({ ...userData, city: target.value })
+            }
           />
           <input
             type="text"
@@ -148,7 +156,9 @@ export default function QuoteForm(DataProps: { data: Session }) {
             required
             readOnly
             value={userData.state} // Populate value from state
-            onChange={({ target }) => setUserdata({ ...userData, state: target.value })}
+            onChange={({ target }) =>
+              setUserdata({ ...userData, state: target.value })
+            }
           />
           <input
             type="number"
@@ -159,10 +169,11 @@ export default function QuoteForm(DataProps: { data: Session }) {
             required
             readOnly
             value={userData.zipcode} // Populate value from state
-            onChange={({ target }) => setUserdata({ ...userData, zipcode: target.value })}
+            onChange={({ target }) =>
+              setUserdata({ ...userData, zipcode: target.value })
+            }
           />
         </div>
-
         {/* Delivery and Pricing */}
         <input
           type="date"
@@ -172,7 +183,9 @@ export default function QuoteForm(DataProps: { data: Session }) {
           className="input-field w-full uppercase"
           required
           value={userData.deliveryDate}
-          onChange={({ target }) => setUserdata({ ...userData, deliveryDate: target.value })}
+          onChange={({ target }) =>
+            setUserdata({ ...userData, deliveryDate: target.value })
+          }
         />
         <input
           type="number"
@@ -181,9 +194,12 @@ export default function QuoteForm(DataProps: { data: Session }) {
           name="suggestedPrice"
           className="input-field w-full overflow-scroll"
           value={userData.suggestedPrice}
-          onChange={({ target }) => setUserdata({ ...userData, suggestedPrice: target.value })}
+          onChange={({ target }) =>
+            setUserdata({ ...userData, suggestedPrice: target.value })
+          }
           required
-        />+
+        />
+        +
         <input
           type="text"
           id="totalPrice"
@@ -192,9 +208,10 @@ export default function QuoteForm(DataProps: { data: Session }) {
           className="input-field [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           readOnly
           defaultValue={userData.totalPrice}
-          onChange={({ target }) => setUserdata({ ...userData, totalPrice: target.value })}
+          onChange={({ target }) =>
+            setUserdata({ ...userData, totalPrice: target.value })
+          }
         />
-
         <button type="submit" className="butoon">
           Submit
         </button>
