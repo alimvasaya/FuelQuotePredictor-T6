@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+// Request fuel quote input form
+"use client";
+import React, { useEffect, useState } from "react";
 import { Session } from "next-auth";
 
 export default function QuoteForm(DataProps: { data: Session }) {
@@ -37,7 +39,7 @@ export default function QuoteForm(DataProps: { data: Session }) {
   const calculateTotalPrice = () => {
     const gallons = parseFloat(userData.gallonsRequested);
     const suggestedPrice = parseFloat(userData.suggestedPrice);
-
+  
     if (!isNaN(gallons) && !isNaN(suggestedPrice)) {
       const total = gallons * suggestedPrice;
       console.log("Calculated Total Price:", total);
@@ -51,10 +53,11 @@ export default function QuoteForm(DataProps: { data: Session }) {
       return 0; // Return a default value, or you can choose to return null or handle the error differently.
     }
   };
-
+ 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     if (formSubmitted) {
@@ -102,8 +105,8 @@ export default function QuoteForm(DataProps: { data: Session }) {
           required
           onChange={({ target }) =>
             setUserdata({ ...userData, gallonsRequested: target.value })
-          }
-          // Populate value from state
+          } // Populate value from state
+
         />
         {/* Address, City, and State */}
         <input
@@ -198,20 +201,20 @@ export default function QuoteForm(DataProps: { data: Session }) {
           required
         />
         +
+
         <input
           type="text"
           id="totalPrice"
           placeholder="Total Amount Due"
           name="totalPrice"
-          className="input-field [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none
-          [&::-webkit-outer-spin-button]:appearance-none"
-          required
+          className="input-field [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           readOnly
           defaultValue={userData.totalPrice}
           onChange={({ target }) =>
             setUserdata({ ...userData, totalPrice: target.value })
           }
         />
+        
         <button type="submit" className="butoon">
           Submit
         </button>

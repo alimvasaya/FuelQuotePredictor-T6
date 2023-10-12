@@ -10,6 +10,7 @@ import { registerUserQuote } from "../microservices/FuelQuote/Forum_quote";
 import { Register_Fuel_Quote } from "../microservices/FuelQuote/Fuel_quote";
 import { View_Quote } from "../microservices/FuelQuote/quote";
 import { completeProfile } from "../microservices/users/completeProfile";
+
 import express, { Request, Response } from "express";
 
 const router = express.Router();
