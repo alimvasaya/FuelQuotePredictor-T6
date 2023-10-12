@@ -46,7 +46,6 @@ export default function SignForm({}: Props) {
     >
       {/* Sign In Form */}
       <div
-        id="login"
         ref={signinRef}
         className="opacity-1 absolute top-24 z-10 -ml-[0px] transition-all duration-700 ease-in-out"
       >

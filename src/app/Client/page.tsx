@@ -33,9 +33,10 @@ const ClientPage = () => {
           <Link to="/Client"></Link>
           <HeaderAuth />
         </nav>
+        <CompleteProfile session={session} />
 
         <Routes>
-          <Route path="/completeProfile" element={<CompleteProfile />} />
+          {/* <Route path="/completeProfile" element={<CompleteProfile />} /> */}
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/requestQuote" element={<QuoteForm />} />
           <Route path="/quoteHistory" element={<QuoteHistory />} />

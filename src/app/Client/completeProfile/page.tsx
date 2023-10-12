@@ -1,12 +1,50 @@
-import React from "react";
+import React, { FormEventHandler } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { Session } from "next-auth";
 
-type Props = {};
+type SessionProps = {
+  session: Session;
+};
 
-export default function ProfileForm({}: Props) {
+const localHost = "http://localhost:8000";
+
+export default function ProfileForm({ session }: SessionProps) {
+  const formData = new FormData();
+
+  // Handle requestQuote Submission
+  const handleProfileCompletion: FormEventHandler<HTMLFormElement> = async (
+    e,
+  ) => {
+    e.preventDefault();
+    console.log(formData);
+    try {
+      const res = await fetch(`${localHost}/api/completeProfile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const userInfo = await res.json();
+      console.log("Complete Profile form: ", userInfo);
+
+      if (res.ok) {
+        return userInfo;
+      } else {
+        console.error("Profile Completion failed: ", userInfo);
+      }
+    } catch (error) {
+      console.error("Error during profile completion: ", error);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center space-y-8 pt-32">
+    <div
+      id="completeProfileForm"
+      className="flex flex-col items-center justify-center space-y-8 pt-32"
+    >
       <h1 className="text-3xl font-semibold uppercase tracking-widest text-white">
         Complete Profile
       </h1>
@@ -17,8 +55,12 @@ export default function ProfileForm({}: Props) {
         className="relative mx-auto h-36 w-36"
       />
 
-      <form className="relative mx-auto flex w-80 flex-col space-y-2">
+      <form
+        onSubmit={handleProfileCompletion}
+        className="relative mx-auto flex w-80 flex-col space-y-2"
+      >
         <input
+          onChange={({ target }) => formData.append(target.name, target.value)}
           type="text"
           id="name"
           placeholder="Full name"
@@ -29,6 +71,7 @@ export default function ProfileForm({}: Props) {
 
         {/* Addresses, City, State, and Zipcode */}
         <input
+          onChange={({ target }) => formData.append(target.name, target.value)}
           type="text"
           id="address1"
           placeholder="Address 1"
@@ -37,6 +80,7 @@ export default function ProfileForm({}: Props) {
           required
         />
         <input
+          onChange={({ target }) => formData.append(target.name, target.value)}
           type="text"
           id="city"
           placeholder="City"
@@ -46,6 +90,9 @@ export default function ProfileForm({}: Props) {
         />
         <div className="flex space-x-2">
           <input
+            onChange={({ target }) =>
+              formData.append(target.name, target.value)
+            }
             type="text"
             id="state"
             placeholder="State"
@@ -109,6 +156,9 @@ export default function ProfileForm({}: Props) {
           </datalist>
 
           <input
+            onChange={({ target }) =>
+              formData.append(target.name, target.value)
+            }
             type="number"
             id="zipcode"
             placeholder="Zipcode"
@@ -120,6 +170,7 @@ export default function ProfileForm({}: Props) {
         </div>
 
         <input
+          onChange={({ target }) => formData.append(target.name, target.value)}
           type="text"
           id="address2"
           placeholder="Address 2 (Optional)"
@@ -128,6 +179,7 @@ export default function ProfileForm({}: Props) {
         />
 
         <button
+          type="submit"
           className="w-full rounded-full bg-indigo-500/50 px-6 py-2 text-sm uppercase
           tracking-widest text-white transition-colors hover:bg-indigo-500/60"
         >
