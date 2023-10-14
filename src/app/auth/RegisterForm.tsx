@@ -1,5 +1,7 @@
+"use client";
 import React, { FormEventHandler } from "react";
 import { useUser } from "../context/UserContext";
+import toast from "react-hot-toast/headless";
 import SignInputField from "./SignInputField";
 
 type SignInFormProps = {
@@ -17,26 +19,18 @@ export default function RegisterForm({
   const handleSignUpSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch(`${localHost}/api/signUp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userCred),
-      });
-
-      const userInfo = await res.json();
-      console.log("Sign UP form: ", userInfo);
-
-      if (res.ok) {
+    const res = await fetch(`${localHost}/api/signUp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userCred),
+    })
+      .then(() => {
+        toast.success("Successfully registered");
         return clickLogInAnim();
-      } else {
-        console.error("Registeration failed: ", userInfo);
-      }
-    } catch (error) {
-      console.error("Error during registration: ", error);
-    }
+      })
+      .catch(() => toast.error("Registration failed"));
   };
 
   return (
@@ -44,14 +38,16 @@ export default function RegisterForm({
       <h1 className="text-2xl font-semibold text-white">SIGN UP</h1>
 
       <form
-        className="mx-auto mt-10 flex w-fit flex-col space-y-2"
         onSubmit={handleSignUpSubmit}
+        className="mx-auto mt-10 flex w-fit flex-col space-y-2"
       >
         <SignInputField
           updateUserEmail={updateUserEmail}
           updateUserPassword={updateUserPassword}
         />
-        <button className="butoon">Submit</button>
+        <button type="submit" className="butoon">
+          Submit
+        </button>
       </form>
 
       <div className="mt-4">
