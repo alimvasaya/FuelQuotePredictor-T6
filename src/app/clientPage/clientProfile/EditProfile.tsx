@@ -1,66 +1,91 @@
-import React, { FormEventHandler } from "react";
+"use client";
+import React, { useState, MouseEventHandler } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { Session } from "next-auth";
+import toast from "react-hot-toast";
 
-type SessionProps = {
-  session: Session;
+type DataProps = {
+  data: Session;
+  clickViewAnim: () => void;
 };
 
-const localHost = "http://localhost:8000";
-
-export default function ProfileForm({ }: SessionProps) {
-  const formData = new FormData();
+export default function ProfileForm({ data, clickViewAnim }: DataProps) {
+  // Set user data from profile form
+  const [userData, setUserData] = useState({
+    email: data.user.email,
+    name: "",
+    address1: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    address2: "",
+  });
 
   // Handle requestQuote Submission
-  const handleProfileCompletion: FormEventHandler<HTMLFormElement> = async (
-    e,
-  ) => {
+  const handleProfileEdit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    try {
-      const res = await fetch(`${localHost}/api/completeProfile`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+
+    const res = await fetch("http://localhost:8000/api/editProfile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then(() => {
+        setUserData({
+          ...userData,
+          name: "",
+          address1: "",
+          city: "",
+          state: "",
+          zipcode: "",
+          address2: "",
+        });
+        clearForm();
+        toast.success("Requested profile edit successfully");
+        return clickViewAnim();
+      })
+      .catch((error) => {
+        toast.error("Profile edit failed");
+        console.error("POST profile edit failed ", error);
       });
-
-      const userInfo = await res.json();
-      console.log("Complete Profile form: ", userInfo);
-
-      if (res.ok) {
-        return userInfo;
-      } else {
-        console.error("Profile Completion failed: ", userInfo);
-      }
-    } catch (error) {
-      console.error("Error during profile completion: ", error);
-    }
   };
 
+  function clearForm() {
+    const name = document.getElementById("name") as HTMLInputElement;
+    const address1 = document.getElementById("address1") as HTMLInputElement;
+    const city = document.getElementById("city") as HTMLInputElement;
+    const state = document.getElementById("state") as HTMLInputElement;
+    const zipcode = document.getElementById("zipcode") as HTMLInputElement;
+    const address2 = document.getElementById("address2") as HTMLInputElement;
+
+    name.value = "";
+    address1.value = "";
+    city.value = "";
+    state.value = "";
+    zipcode.value = "";
+    address2.value = "";
+  }
+
   return (
-    <div
-      id="completeProfileForm"
-      className="flex flex-col items-center justify-center space-y-8 pt-32"
-    >
+    <div className="flex flex-col items-center justify-center pt-32">
       <h1 className="text-3xl font-semibold uppercase tracking-widest text-white">
-        Complete Profile
+        Edit Profile
       </h1>
 
       <FontAwesomeIcon
         icon={faUser}
         style={{ color: "#6366f1" }}
-        className="relative mx-auto h-36 w-36"
+        className="relative mx-auto mt-8 h-36 w-36"
       />
 
-      <form
-        onSubmit={handleProfileCompletion}
-        className="relative mx-auto flex w-80 flex-col space-y-2"
-      >
+      <form className="relative mx-auto mt-8 flex w-80 flex-col space-y-2">
         <input
-          onChange={({ target }) => formData.append(target.name, target.value)}
+          onChange={({ target }) =>
+            setUserData({ ...userData, name: target.value })
+          }
           type="text"
           id="name"
           placeholder="Full name"
@@ -71,7 +96,9 @@ export default function ProfileForm({ }: SessionProps) {
 
         {/* Addresses, City, State, and Zipcode */}
         <input
-          onChange={({ target }) => formData.append(target.name, target.value)}
+          onChange={({ target }) =>
+            setUserData({ ...userData, address1: target.value })
+          }
           type="text"
           id="address1"
           placeholder="Address 1"
@@ -80,7 +107,9 @@ export default function ProfileForm({ }: SessionProps) {
           required
         />
         <input
-          onChange={({ target }) => formData.append(target.name, target.value)}
+          onChange={({ target }) =>
+            setUserData({ ...userData, city: target.value })
+          }
           type="text"
           id="city"
           placeholder="City"
@@ -91,7 +120,7 @@ export default function ProfileForm({ }: SessionProps) {
         <div className="flex space-x-2">
           <input
             onChange={({ target }) =>
-              formData.append(target.name, target.value)
+              setUserData({ ...userData, state: target.value })
             }
             type="text"
             id="state"
@@ -157,9 +186,9 @@ export default function ProfileForm({ }: SessionProps) {
 
           <input
             onChange={({ target }) =>
-              formData.append(target.name, target.value)
+              setUserData({ ...userData, zipcode: target.value.toString() })
             }
-            type="number"
+            type="text"
             id="zipcode"
             placeholder="Zipcode"
             name="zipcode"
@@ -170,22 +199,19 @@ export default function ProfileForm({ }: SessionProps) {
         </div>
 
         <input
-          onChange={({ target }) => formData.append(target.name, target.value)}
+          onChange={({ target }) =>
+            setUserData({ ...userData, address2: target.value })
+          }
           type="text"
           id="address2"
           placeholder="Address 2 (Optional)"
           name="address2"
           className="input-field"
         />
-
-        <button
-          type="submit"
-          className="w-full rounded-full bg-indigo-500/50 px-6 py-2 text-sm uppercase
-          tracking-widest text-white transition-colors hover:bg-indigo-500/60"
-        >
-          Submit
-        </button>
       </form>
+      <button onClick={handleProfileEdit} className="butoon mt-2 w-80">
+        Submit
+      </button>
     </div>
   );
 }

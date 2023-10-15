@@ -1,33 +1,26 @@
 // connect with db
 import { Request } from "express";
 import { processResponse } from "../../middleware/requestRouter";
-import { users } from "../../fakeDB/usersDB";
+import { findUser } from "./findUser";
 
 export const completeProfile = async (req: Request, res: any) => {
-  console.log("completeProfile: request received");
-  const user = await {
-    email: req.body.email,
-    fullName: req.body.fullName,
-    address1: req.body.address1,
-    city: req.body.city,
-    state: req.body.state,
-    zipcode: req.body.zipcode,
-    address2: req.body.address2,
-  };
+  try {
+    const user = await findUser(req.body.email);
 
-  if (user != null) {
-    for (const u of users) {
-      if (u.email === user.email) {
-        u.fullName = user.fullName;
-        u.address1 = user.address1;
-        u.city = user.city;
-        u.state = user.state;
-        u.zipcode = user.zipcode;
-        u.address2 = user.address2;
-        u.isNew = false;
-      }
-      console.log(u);
+    if (user != null) {
+      user.name = req.body.name;
+      user.address1 = req.body.address1;
+      user.city = req.body.city;
+      user.state = req.body.state;
+      user.zipcode = req.body.zipcode;
+      user.address2 = req.body.address2;
+      user.isNew = false;
+
+      processResponse(user, res);
+    } else {
+      console.error("Server error: completeProfile");
     }
-    processResponse(user, res);
+  } catch (err) {
+    console.error("Server error: completeProfile");
   }
 };

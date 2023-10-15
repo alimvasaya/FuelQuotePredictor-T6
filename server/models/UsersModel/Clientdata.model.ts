@@ -41,12 +41,17 @@
 //     },
 // };
 
-export const clientInfo ={
+export const clientInfo = [
+  {
     userID: "1",
+    email: "johnsmith@gmail.com",
+    password: "js", // use bcrypt
     name: "John Smith",
     address1: "123 Main St",
     address2: "Apt 1",
     city: "Houston",
     state: "TX",
     zipcode: 77001,
-};
+    isNew: false,
+  },
+];
