@@ -9,7 +9,7 @@ type SessionProps = {
 
 const localHost = "http://localhost:8000";
 
-export default function ProfileForm({ session }: SessionProps) {
+export default function ProfileForm({ }: SessionProps) {
   const formData = new FormData();
 
   // Handle requestQuote Submission

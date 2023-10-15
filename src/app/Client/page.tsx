@@ -38,7 +38,7 @@ const ClientPage = () => {
         <Routes>
           {/* <Route path="/completeProfile" element={<CompleteProfile />} /> */}
           <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/requestQuote" element={<QuoteForm />} />
+          <Route path="/requestQuote" element={<QuoteForm data={session} />} />
           <Route path="/quoteHistory" element={<QuoteHistory />} />
           <Route path="/viewProfile" element={<ViewProfile />} />
         </Routes>

@@ -54,6 +54,11 @@ export default function QuoteForm(DataProps: { data: Session }) {
     }
   };
  
+  const validateDeliveryDate = (date) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(date);
+    return selectedDate >= currentDate;
+  };
   const [formSubmitted, setFormSubmitted] = useState(false);
   
 
@@ -63,6 +68,12 @@ export default function QuoteForm(DataProps: { data: Session }) {
     if (formSubmitted) {
       return;
     }
+
+    if (!validateDeliveryDate(userData.deliveryDate)) {
+      console.log("Delivery date cannot be before the current date.");
+      return;
+    }
+
     const total = calculateTotalPrice();
     console.log("Total Price:", userData.totalPrice);
     try {
