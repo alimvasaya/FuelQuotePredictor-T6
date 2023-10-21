@@ -1,7 +1,7 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Session } from "next-auth";
-import HistCard from "./HistCard";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Session } from 'next-auth';
+import HistCard from './HistCard';
 
 type DataProps = {
   data: Session;
@@ -25,10 +25,10 @@ export default function QuoteHist({ data }: DataProps) {
   const [quoteHistory, setQuoteHistory] = useState<Quote[]>([]);
 
   const fetchHistory = () => {
-    fetch("http://localhost:8000/api/viewQuotes", {
-      method: "POST",
+    fetch('http://localhost:8000/api/viewQuotes', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email: data.user.email }),
     })
@@ -38,7 +38,7 @@ export default function QuoteHist({ data }: DataProps) {
         setQuoteHistory(data);
       })
       .catch((error) => {
-        console.error("Fetch history failed ", error);
+        console.error('Fetch history failed ', error);
       });
   };
 

@@ -1,6 +1,6 @@
-"use client";
-import React, { useRef, useEffect } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+'use client';
+import React, { useRef, useEffect } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 type Props = {};
 
@@ -12,9 +12,9 @@ export default function Header({}: Props) {
   function onLoadHeader() {
     if (homeRef.current == null) return;
     // accountRef.current.style.marginRight = "0px";
-    homeRef.current.style.marginLeft = "0px";
+    homeRef.current.style.marginLeft = '0px';
     // accountRef.current.style.opacity = "1";
-    homeRef.current.style.opacity = "1";
+    homeRef.current.style.opacity = '1';
   }
 
   useEffect(() => {

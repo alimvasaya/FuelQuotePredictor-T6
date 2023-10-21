@@ -1,5 +1,5 @@
-"use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+'use client';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // Configure UserContext
 type User = {
@@ -27,7 +27,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function useUser(): UserContextType {
   const context = useContext(UserContext);
   if (context === undefined) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error('useUser must be used within a UserProvider');
   }
   return context;
 }
@@ -39,7 +39,7 @@ type UserProviderProps = {
 
 export function UserProvider({ children }: UserProviderProps) {
   // Set User Credentials
-  const [userCred, setUserCred] = useState<User>({ email: "", password: "" });
+  const [userCred, setUserCred] = useState<User>({ email: '', password: '' });
 
   const updateUserEmail = (email: string) => {
     setUserCred({ ...userCred, email });

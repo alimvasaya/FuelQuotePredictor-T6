@@ -1,57 +1,60 @@
-// const clientInfo = {
-//     userID: {
-//         type: "string",
-//     },
-//     name: {
-//         type: "string",
-//         required: true,
-//         trim: true,
-//         maxlength: 50,
-//     },
-//     address1: {
-//         type: "string",
-//         required: true,
-//         trim: true,
-//         maxlength: 100,
-//     },
-//     address2: {
-//         type: "string",
-//         required: false,
-//         trim: true,
-//         maxlength: 100,
-//     },
-//     city: {
-//         type: "string",
-//         required: true,
-//         trim: true,
-//         maxlength: 100,
-//     },
-//     state: {
-//         type: "string",
-//         required: true,
-//         trim: true,
-//         maxlength: 2,
-//     },
-//     zipcode: {
-//         type: "number",
-//         required: true,
-//         trim: true,
-//         maxlength: 9,
-//         minlength: 5,
-//     },
-// };
+import { Schema, model, models } from 'mongoose';
 
-export const clientInfo = [
+const ClientDataSchema = new Schema(
   {
-    userID: "1",
-    email: "johnsmith@gmail.com",
-    password: "js", // use bcrypt
-    name: "John Smith",
-    address1: "123 Main St",
-    address2: "Apt 1",
-    city: "Houston",
-    state: "TX",
-    zipcode: 77001,
-    isNew: false,
+    userId: {
+      type: Schema.Types.ObjectId,
+    },
+
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 50,
+    },
+
+    address1: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
+
+    address2: {
+      type: String,
+      required: false,
+      trim: true,
+      maxlength: 100,
+    },
+
+    city: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
+
+    state: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 2,
+    },
+
+    zipcode: {
+      type: Number,
+      required: true,
+      trim: true,
+      maxlength: 9,
+      minlength: 5,
+    },
   },
-];
+  {
+    timestamps: true,
+  },
+);
+
+const ClientData =
+  models.ClientDataSchema || model('client_data', ClientDataSchema);
+
+export default ClientData;

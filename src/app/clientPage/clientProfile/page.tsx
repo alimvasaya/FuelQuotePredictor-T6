@@ -1,9 +1,9 @@
-"use client";
-import React, { useRef } from "react";
-import { Session } from "next-auth";
+'use client';
+import React, { useRef } from 'react';
+import { Session } from 'next-auth';
 
-import ViewProfile from "./ViewProfile";
-import EditProfile from "./EditProfile";
+import ViewProfile from './ViewProfile';
+import EditProfile from './EditProfile';
 
 type DataProps = {
   data: Session;
@@ -16,18 +16,18 @@ export default function Profile({ data }: DataProps) {
   // Animations: transition between viewProfile and EditProfile
   function clickViewAnim() {
     if (viewRef.current == null || editRef.current == null) return;
-    viewRef.current.style.marginLeft = "0px";
-    editRef.current.style.marginRight = "-700px";
-    viewRef.current.style.opacity = "1";
-    editRef.current.style.opacity = "0";
+    viewRef.current.style.marginLeft = '0px';
+    editRef.current.style.marginRight = '-700px';
+    viewRef.current.style.opacity = '1';
+    editRef.current.style.opacity = '0';
   }
 
   function clickEditAnim() {
     if (viewRef.current == null || editRef.current == null) return;
-    viewRef.current.style.marginLeft = "-700px";
-    editRef.current.style.marginRight = "0px";
-    viewRef.current.style.opacity = "0";
-    editRef.current.style.opacity = "1";
+    viewRef.current.style.marginLeft = '-700px';
+    editRef.current.style.marginRight = '0px';
+    viewRef.current.style.opacity = '0';
+    editRef.current.style.opacity = '1';
   }
 
   return (

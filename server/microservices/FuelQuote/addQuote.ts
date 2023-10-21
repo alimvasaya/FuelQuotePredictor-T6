@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { processResponse } from "../../middleware/requestRouter";
-import { findQuote } from "./findQuote";
+import { Request, Response } from 'express';
+import { processResponse } from '../../middleware/requestRouter';
+import { findQuote } from './findQuote';
 
 export const addQuote = async (req: Request, res: Response) => {
   try {
@@ -25,7 +25,7 @@ export const addQuote = async (req: Request, res: Response) => {
       fuel.hasHistory = true;
       processResponse(fuel.quoteHistory, res);
     } else {
-      console.error("Request quote failed");
+      console.error('Request quote failed');
     }
   } catch (err) {
     return res.status(400).json({ err });

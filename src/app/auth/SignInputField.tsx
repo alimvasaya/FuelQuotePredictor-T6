@@ -1,18 +1,16 @@
-import React from "react";
+import React from 'react';
 
-type Props = {
-  updateUserEmail: (email: string) => void;
-  updateUserPassword: (Password: string) => void;
+type RefProps = {
+  emailRef: React.LegacyRef<HTMLInputElement>;
+  passRef: React.LegacyRef<HTMLInputElement>;
 };
 
-export default function SignInputField({
-  updateUserEmail,
-  updateUserPassword,
-}: Props) {
+export default function SignInputField({ emailRef, passRef }: RefProps) {
   return (
     <div className="flex flex-col space-y-2">
       <input
-        onChange={({ target }) => updateUserEmail(target.value)}
+        ref={emailRef}
+        // onChange={({ target }) => updateUserEmail(target.value)}
         type="email"
         placeholder="Email"
         name="email"
@@ -20,13 +18,16 @@ export default function SignInputField({
         required
       />
       <input
-        onChange={({ target }) => updateUserPassword(target.value)}
+        ref={passRef}
+        // onChange={({ target }) => updateUserPassword(target.value)}
         type="password"
         placeholder="Password"
         name="password"
         className="input-field"
         required
       />
+
+      <button className="butoon mt-2 w-full">Submit</button>
     </div>
   );
 }

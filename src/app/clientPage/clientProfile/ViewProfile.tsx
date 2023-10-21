@@ -1,8 +1,8 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { Session } from "next-auth";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { Session } from 'next-auth';
 
 type DataProps = {
   data: Session;
@@ -12,19 +12,19 @@ type DataProps = {
 export default function Profile({ data, clickEditAnim }: DataProps) {
   const [userProfile, setUserProfile] = useState({
     email: data.user.email,
-    name: "",
-    address1: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    address2: "",
+    name: '',
+    address1: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    address2: '',
   });
 
   const fetchUserProfile = () => {
-    fetch("http://localhost:8000/api/viewProfile", {
-      method: "POST",
+    fetch('http://localhost:8000/api/viewProfile', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email: data.user.email }),
     })
@@ -34,7 +34,7 @@ export default function Profile({ data, clickEditAnim }: DataProps) {
         setUserProfile(data);
       })
       .catch((error) => {
-        console.error("Fetch user profile failed ", error);
+        console.error('Fetch user profile failed ', error);
       });
   };
 
@@ -50,7 +50,7 @@ export default function Profile({ data, clickEditAnim }: DataProps) {
 
       <FontAwesomeIcon
         icon={faUser}
-        style={{ color: "#6366f1" }}
+        style={{ color: '#6366f1' }}
         className="mx-auto h-36 w-36"
       />
 

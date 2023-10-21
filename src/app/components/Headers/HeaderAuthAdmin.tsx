@@ -1,7 +1,7 @@
-"use client";
-import React, { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { signOut } from "next-auth/react";
+'use client';
+import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { signOut } from 'next-auth/react';
 
 type Props = {};
 
@@ -12,10 +12,10 @@ export default function HeaderLogin({}: Props) {
 
   function onLoadHeader() {
     if (accountRef.current == null || homeRef.current == null) return;
-    accountRef.current.style.marginRight = "0px";
-    homeRef.current.style.marginLeft = "0px";
-    accountRef.current.style.opacity = "1";
-    homeRef.current.style.opacity = "1";
+    accountRef.current.style.marginRight = '0px';
+    homeRef.current.style.marginLeft = '0px';
+    accountRef.current.style.opacity = '1';
+    homeRef.current.style.opacity = '1';
   }
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function HeaderLogin({}: Props) {
         </Link>
         <button
           className="butoon"
-          onClick={() => signOut({ callbackUrl: "http://localhost:3000" })}
+          onClick={() => signOut({ callbackUrl: 'http://localhost:3000' })}
         >
           Sign Out
         </button>

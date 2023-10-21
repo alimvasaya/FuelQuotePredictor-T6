@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 
 type HistData = {
   deliveryDate: string;
@@ -29,9 +29,9 @@ export default function HistCard({
         <h2 className="text-sm font-medium lg:text-base">{deliveryDate}</h2>
         <p className="tracking-wider">
           <span className="text-sm tracking-normal text-white/50 lg:text-base">
-            Amount requested:{" "}
+            Amount requested:{' '}
           </span>
-          {gallons}{" "}
+          {gallons}{' '}
           <span className="my-3 text-sm font-medium md:text-base">gallons</span>
         </p>
         <p className="text-sm tracking-normal text-white/50 lg:text-base">

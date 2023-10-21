@@ -1,10 +1,9 @@
-"use client";
-import React, { FormEventHandler } from "react";
-import { useUser } from "../context/UserContext";
-import toast from "react-hot-toast/headless";
-import SignInputField from "./SignInputField";
+'use client';
+import React, { useRef, FormEventHandler } from 'react';
+import toast from 'react-hot-toast/headless';
+import SignInputField from './SignInputField';
 
-type SignInFormProps = {
+type SignInProps = {
   localHost: string;
   clickLogInAnim: () => void;
 };
@@ -12,25 +11,34 @@ type SignInFormProps = {
 export default function RegisterForm({
   localHost,
   clickLogInAnim,
-}: SignInFormProps) {
-  const { userCred, updateUserEmail, updateUserPassword } = useUser();
+}: SignInProps) {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passRef = useRef<HTMLInputElement>(null);
 
   // Handle Register Submission
   const handleSignUpSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
+    if (emailRef.current == null || passRef.current == null) {
+      toast.error('Invalid credentials');
+      return;
+    }
+
     const res = await fetch(`${localHost}/api/signUp`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userCred),
+      body: JSON.stringify({
+        email: emailRef.current.value,
+        password: passRef.current.value,
+      }),
     })
       .then(() => {
-        toast.success("Successfully registered");
+        toast.success('Successfully registered');
         return clickLogInAnim();
       })
-      .catch(() => toast.error("Registration failed"));
+      .catch(() => toast.error('Registration failed'));
   };
 
   return (
@@ -41,18 +49,12 @@ export default function RegisterForm({
         onSubmit={handleSignUpSubmit}
         className="mx-auto mt-10 flex w-fit flex-col space-y-2"
       >
-        <SignInputField
-          updateUserEmail={updateUserEmail}
-          updateUserPassword={updateUserPassword}
-        />
-        <button type="submit" className="butoon">
-          Submit
-        </button>
+        <SignInputField emailRef={emailRef} passRef={passRef} />
       </form>
 
       <div className="mt-4">
         <span className="font-light text-white">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <a
             href="#"
             onClick={clickLogInAnim}

@@ -1,36 +1,42 @@
-"use client";
-import React, { useRef, useEffect, useState, MouseEventHandler } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { Session } from "next-auth";
-import toast from "react-hot-toast";
+'use client';
+import React, { useRef, useEffect, useState, MouseEventHandler } from 'react';
+import { useSession } from 'next-auth/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import toast from 'react-hot-toast';
 
-type SessionProps = {
-  data: Session;
-};
+type Props = {};
 
-const localHost = "http://localhost:8000";
+const localHost = 'http://localhost:8000';
 
-export default function ProfileForm({ data }: SessionProps) {
-  //  Render if new user
+export default function ProfileForm({}: Props) {
+  const session = useSession();
+
+  // Hide form if returning user
   const profileRef = useRef<HTMLDivElement>(null);
 
-  // function loadProfileForm() {
-  //   if (profileRef.current == null) return;
-  //   profileRef.current.classList.remove("display");
-  //   profileRef.current.classList.add("display: flex");
-  //   profileRef.current.classList.add("flex-direction: column");
-  // }
+  function hideProfileForm() {
+    if (profileRef.current == null) return;
+    profileRef.current.style.display = 'none';
+    profileRef.current.style.opacity = '0';
+  }
+
+  useEffect(() => {
+    if (session.data?.user.dataCompleted === true) {
+      hideProfileForm();
+    }
+  }, []);
 
   // Set user data from profile form
   const [userData, setUserData] = useState({
-    email: data.user.email,
-    name: "",
-    address1: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    address2: "",
+    userId: session.data?.user.id,
+    email: session.data?.user.email,
+    name: '',
+    address1: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    address2: '',
   });
 
   // Handle requestQuote Submission
@@ -40,18 +46,19 @@ export default function ProfileForm({ data }: SessionProps) {
     e.preventDefault();
 
     const res = await fetch(`${localHost}/api/completeProfile`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
     })
       .then(() => {
-        toast.success("Completed profile successfully");
+        toast.success('Completed profile successfully');
+        hideProfileForm();
       })
-      .catch((error) => {
-        toast.error("Profile completion failed");
-        console.error("POST profile completion failed ", error);
+      .catch((err) => {
+        toast.error('Profile completion failed');
+        console.error(err);
       });
   };
 
@@ -66,7 +73,7 @@ export default function ProfileForm({ data }: SessionProps) {
 
       <FontAwesomeIcon
         icon={faUser}
-        style={{ color: "#6366f1" }}
+        style={{ color: '#6366f1' }}
         className="relative mx-auto mt-8 h-36 w-36"
       />
 

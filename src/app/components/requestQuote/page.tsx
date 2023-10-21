@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 type Props = {};
 
 export default function QuoteForm({}: Props) {
   function calculatePrice() {
-    const gallons = Number(document.getElementById("gallons")?.nodeValue);
-    let state = document.getElementById("state")?.nodeValue;
+    const gallons = Number(document.getElementById('gallons')?.nodeValue);
+    let state = document.getElementById('state')?.nodeValue;
   }
 
   return (
