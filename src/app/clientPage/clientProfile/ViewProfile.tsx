@@ -20,27 +20,34 @@ export default function Profile({ data, clickEditAnim }: DataProps) {
     address2: '',
   });
 
-  const fetchUserProfile = () => {
-    fetch('http://localhost:8000/api/viewProfile', {
-      method: 'POST',
+  // Fetch client data
+  const fetchProfile = () => {
+    fetch(`http://localhost:8000/api/viewProfile/${data.user.id}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: data.user.email }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        setUserProfile(data);
+        setUserProfile({
+          ...userProfile,
+          name: data.name,
+          address1: data.address1,
+          city: data.city,
+          state: data.state,
+          zipcode: data.zipcode,
+          address2: data.address2,
+        });
       })
-      .catch((error) => {
-        console.error('Fetch user profile failed ', error);
+      .catch((err) => {
+        console.error(err);
       });
   };
 
   useEffect(() => {
-    fetchUserProfile();
-  }, [userProfile]);
+    fetchProfile();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center space-y-8 pt-32">
