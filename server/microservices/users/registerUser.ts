@@ -29,7 +29,7 @@ export const registerUser = async (req: Request, res: Response) => {
     });
 
     console.log(newUser);
-    newUser.save();
+    await newUser.save();
 
     res.status(201).json({ message: 'Registered user successfully' });
   } catch (err) {

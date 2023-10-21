@@ -26,13 +26,16 @@ export default function ProfileForm({ data, clickViewAnim }: DataProps) {
   const handleProfileEdit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
-    const res = await fetch('http://localhost:8000/api/editProfile', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const res = await fetch(
+      `http://localhost:8000/api/editProfile/${data.user.id}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
       },
-      body: JSON.stringify(userData),
-    })
+    )
       .then(() => {
         setUserData({
           ...userData,
@@ -44,12 +47,12 @@ export default function ProfileForm({ data, clickViewAnim }: DataProps) {
           address2: '',
         });
         clearForm();
-        toast.success('Requested profile edit successfully');
+        toast.success('Your information will update momentarily');
         return clickViewAnim();
       })
-      .catch((error) => {
-        toast.error('Profile edit failed');
-        console.error('POST profile edit failed ', error);
+      .catch((err) => {
+        toast.error('An error occured. Try again later');
+        console.error(err);
       });
   };
 

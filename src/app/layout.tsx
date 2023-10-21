@@ -22,12 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <button
+          {/* <button
             className="butoon"
             onClick={() => signOut({ callbackUrl: 'http://localhost:3000' })}
           >
             Sign Out
-          </button>
+          </button> */}
           <ToasterContext />
           {children}
         </AuthProvider>

@@ -15,12 +15,12 @@ export const completeProfile = async (req: Request, res: Response) => {
       city: req.body.city,
       state: req.body.state,
       zipcode: req.body.zipcode,
-      address2: req.body.address2,
+      address2: req.body.address2 === '' ? 'None' : req.body.address2,
     });
 
     console.log(newClient);
 
-    newClient.save();
+    await newClient.save();
 
     const updatedUser = await UserCredentials.findByIdAndUpdate(
       newClient.userId,

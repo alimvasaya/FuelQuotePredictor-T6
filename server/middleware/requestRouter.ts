@@ -1,7 +1,7 @@
 import { registerUser } from '../microservices/Users/registerUser';
 import { completeProfile } from '../microservices/Users/completeProfile';
-// import { viewProfile } from '../microservices/Users/viewProfile';
-// import { editProfile } from '../microservices/Users/editProfile';
+import { viewProfile } from '../microservices/Users/viewProfile';
+import { editProfile } from '../microservices/Users/editProfile';
 
 // import { fillQuote } from '../microservices/FuelQuote/fillQuote';
 // import { addQuote } from '../microservices/FuelQuote/addQuote';
@@ -21,13 +21,13 @@ export const createRoute = () => {
     completeProfile(req, res); // Handle new profile completion for new user
   });
 
-  // router.post('/viewProfile', (req: Request, res: Response) => {
-  //   viewProfile(req, res); // Handle registering new user
-  // });
+  router.get('/viewProfile/:userId', (req: Request, res: Response) => {
+    viewProfile(req, res); // Handle registering new user
+  });
 
-  // router.post('/editProfile', (req: Request, res: Response) => {
-  //   editProfile(req, res); // Handle registering new user
-  // });
+  router.post('/editProfile/:userId', (req: Request, res: Response) => {
+    editProfile(req, res); // Handle registering new user
+  });
 
   // Quote interactions
   // router.post('/fillQuote', (req: Request, res: Response) => {
@@ -44,7 +44,6 @@ export const createRoute = () => {
   return router;
 };
 
-export const processResponse = (user: any, res: Response) => {
-  res.send(user);
-  console.log('processResponse: ', user);
+export const processResponse = (info: any, res: Response) => {
+  res.send(info);
 };
