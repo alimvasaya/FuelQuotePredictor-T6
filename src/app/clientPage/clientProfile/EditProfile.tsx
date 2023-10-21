@@ -1,9 +1,9 @@
-"use client";
-import React, { useState, MouseEventHandler } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { Session } from "next-auth";
-import toast from "react-hot-toast";
+'use client';
+import React, { useState, MouseEventHandler } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { Session } from 'next-auth';
+import toast from 'react-hot-toast';
 
 type DataProps = {
   data: Session;
@@ -14,59 +14,59 @@ export default function ProfileForm({ data, clickViewAnim }: DataProps) {
   // Set user data from profile form
   const [userData, setUserData] = useState({
     email: data.user.email,
-    name: "",
-    address1: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    address2: "",
+    name: '',
+    address1: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    address2: '',
   });
 
   // Handle requestQuote Submission
   const handleProfileEdit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:8000/api/editProfile", {
-      method: "POST",
+    const res = await fetch('http://localhost:8000/api/editProfile', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
     })
       .then(() => {
         setUserData({
           ...userData,
-          name: "",
-          address1: "",
-          city: "",
-          state: "",
-          zipcode: "",
-          address2: "",
+          name: '',
+          address1: '',
+          city: '',
+          state: '',
+          zipcode: '',
+          address2: '',
         });
         clearForm();
-        toast.success("Requested profile edit successfully");
+        toast.success('Requested profile edit successfully');
         return clickViewAnim();
       })
       .catch((error) => {
-        toast.error("Profile edit failed");
-        console.error("POST profile edit failed ", error);
+        toast.error('Profile edit failed');
+        console.error('POST profile edit failed ', error);
       });
   };
 
   function clearForm() {
-    const name = document.getElementById("name") as HTMLInputElement;
-    const address1 = document.getElementById("address1") as HTMLInputElement;
-    const city = document.getElementById("city") as HTMLInputElement;
-    const state = document.getElementById("state") as HTMLInputElement;
-    const zipcode = document.getElementById("zipcode") as HTMLInputElement;
-    const address2 = document.getElementById("address2") as HTMLInputElement;
+    const name = document.getElementById('name') as HTMLInputElement;
+    const address1 = document.getElementById('address1') as HTMLInputElement;
+    const city = document.getElementById('city') as HTMLInputElement;
+    const state = document.getElementById('state') as HTMLInputElement;
+    const zipcode = document.getElementById('zipcode') as HTMLInputElement;
+    const address2 = document.getElementById('address2') as HTMLInputElement;
 
-    name.value = "";
-    address1.value = "";
-    city.value = "";
-    state.value = "";
-    zipcode.value = "";
-    address2.value = "";
+    name.value = '';
+    address1.value = '';
+    city.value = '';
+    state.value = '';
+    zipcode.value = '';
+    address2.value = '';
   }
 
   return (
@@ -77,7 +77,7 @@ export default function ProfileForm({ data, clickViewAnim }: DataProps) {
 
       <FontAwesomeIcon
         icon={faUser}
-        style={{ color: "#6366f1" }}
+        style={{ color: '#6366f1' }}
         className="relative mx-auto mt-8 h-36 w-36"
       />
 

@@ -1,9 +1,8 @@
-"use client";
-import React, { FormEventHandler } from "react";
-import { signIn, useSession } from "next-auth/react";
-import { useUser } from "../context/UserContext";
-import toast from "react-hot-toast";
-import SignInputField from "./SignInputField";
+'use client';
+import React, { useRef, useEffect, FormEventHandler } from 'react';
+import { signIn, useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
+import SignInputField from './SignInputField';
 
 type SignInFormProps = {
   clickRegisterAnim: () => void;
@@ -12,27 +11,39 @@ type SignInFormProps = {
 export default function LogInForm({
   clickRegisterAnim: clickSignUpAnim,
 }: SignInFormProps) {
-  const { userCred, updateUserEmail, updateUserPassword } = useUser();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passRef = useRef<HTMLInputElement>(null);
   const session = useSession();
+
+  useEffect(() => {
+    if (
+      window.location.href ===
+        'http://localhost:3000/?error=Incorrect%20credentials' &&
+      session.status === 'unauthenticated'
+    ) {
+      toast.error('Incorrect credentials');
+    }
+  }, []);
 
   // Handle SignIn Submission
   const handleLogInSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    const res = await signIn("credentials", {
-      email: userCred.email,
-      password: userCred.password,
+    if (emailRef.current == null || passRef.current == null) {
+      toast.error('Invalid credentials');
+      return;
+    }
+
+    const res = await signIn('credentials', {
+      email: emailRef.current.value,
+      password: passRef.current.value,
       redirect: true,
-    }).then((callback) => {
-      if (callback?.error) {
-        toast.error(callback?.error);
-      }
-      if (callback?.ok && !callback.error) {
-        toast.success("Logged in successfully");
-        if (session?.data?.user.role === "client") {
-          callback.url = "http://localhost:3000/Client";
-        } else if (session?.data?.user.role === "admin") {
-          callback.url = "http://localhost:3000/Admin";
+    }).then((res) => {
+      if (res?.ok && !res.error) {
+        if (session.data?.user.role === 'client') {
+          res.url = 'http://localhost:3000/Client';
+        } else if (session.data?.user.role === 'admin') {
+          res.url = 'http://localhost:3000/Admin';
         }
       }
     });
@@ -46,13 +57,7 @@ export default function LogInForm({
         onSubmit={handleLogInSubmit}
         className="mx-auto mt-10 flex w-fit flex-col space-y-2"
       >
-        <SignInputField
-          updateUserEmail={updateUserEmail}
-          updateUserPassword={updateUserPassword}
-        />
-        <button type="submit" className="butoon mt-2 w-full">
-          Submit
-        </button>
+        <SignInputField emailRef={emailRef} passRef={passRef} />
       </form>
 
       {/* <div className="mt-4">
@@ -65,7 +70,7 @@ export default function LogInForm({
 
       <div className="mt-2">
         <span className="font-light text-white">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <a
             href="#"
             onClick={clickSignUpAnim}

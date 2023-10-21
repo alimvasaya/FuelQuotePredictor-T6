@@ -1,12 +1,12 @@
-"use client";
+'use client';
 import React, {
   useEffect,
   useState,
   ChangeEventHandler,
   MouseEventHandler,
-} from "react";
-import { Session } from "next-auth";
-import toast from "react-hot-toast";
+} from 'react';
+import { Session } from 'next-auth';
+import toast from 'react-hot-toast';
 
 type DataProps = {
   data: Session;
@@ -14,40 +14,40 @@ type DataProps = {
 
 export default function QuoteForm({ data }: DataProps) {
   const [userData, setUserdata] = useState({
-    userId: "",
+    userId: '',
     email: data.user.email,
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    gallonsRequested: "",
-    deliveryDate: "",
-    suggestedPrice: "",
-    totalPrice: "", // Use a default value here
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    gallonsRequested: '',
+    deliveryDate: '',
+    suggestedPrice: '',
+    totalPrice: '', // Use a default value here
   });
 
   // Fetch address
-  const fetchUserData = () => {
-    fetch("http://localhost:8000/api/fillQuote", {
-      method: "POST",
+  const fetchAddress = () => {
+    fetch('http://localhost:8000/api/fillQuote', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email: userData.email }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Fetch address sucessfully ", data);
+        console.log('Fetch address sucessfully ', data);
         setUserdata(data);
       })
       .catch((error) => {
-        console.error("Fetch address failed ", error);
+        console.error('Fetch address failed ', error);
       });
   };
 
   useEffect(() => {
-    fetchUserData();
+    fetchAddress();
   }, []);
 
   useEffect(() => {
@@ -71,9 +71,9 @@ export default function QuoteForm({ data }: DataProps) {
 
       return total.toString(); // Return the calculated total
     } else {
-      console.error("Gallons or suggestedPrice is not a valid number");
-      setUserdata({ ...userData, totalPrice: "0" });
-      return "0"; // Return a default value, or you can choose to return null or handle the error differently.
+      console.error('Gallons or suggestedPrice is not a valid number');
+      setUserdata({ ...userData, totalPrice: '0' });
+      return '0'; // Return a default value, or you can choose to return null or handle the error differently.
     }
   };
 
@@ -83,27 +83,27 @@ export default function QuoteForm({ data }: DataProps) {
   ) => {
     e.preventDefault;
 
-    const res = await fetch("http://localhost:8000/api/addQuote", {
-      method: "POST",
+    const res = await fetch('http://localhost:8000/api/addQuote', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.success("Requested quote successfully");
-        console.log("Requested quote successfully ", data);
+        toast.success('Requested quote successfully');
+        console.log('Requested quote successfully ', data);
         setUserdata({
           ...userData,
-          gallonsRequested: "",
-          deliveryDate: "",
-          totalPrice: "",
+          gallonsRequested: '',
+          deliveryDate: '',
+          totalPrice: '',
         });
       })
       .catch((error) => {
-        toast.error("Request quote failed");
-        console.error("Request quote failed ", error);
+        toast.error('Request quote failed');
+        console.error('Request quote failed ', error);
       });
   };
 

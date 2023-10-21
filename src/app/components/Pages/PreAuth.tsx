@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+'use client';
+import React from 'react';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
-import Header from "../Headers/Header";
-import SignForm from "../../auth/SignForm";
+import Header from '../Headers/Header';
+import SignForm from '../../auth/SignForm';
 
 type Props = {};
 

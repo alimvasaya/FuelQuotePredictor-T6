@@ -1,6 +1,6 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 type Props = {};
 
@@ -13,7 +13,7 @@ export default function Profile({}: Props) {
 
       <FontAwesomeIcon
         icon={faUser}
-        style={{ color: "#6366f1" }}
+        style={{ color: '#6366f1' }}
         className="relative mx-auto h-36 w-36 rounded-full border-8 
           border-indigo-500 object-cover"
       />

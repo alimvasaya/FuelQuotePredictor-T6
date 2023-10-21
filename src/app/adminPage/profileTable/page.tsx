@@ -1,19 +1,19 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 
 const ProfileTable = () => {
   // Sample data for client users
   const [clientUsers, setClientUsers] = useState([
     {
       id: 1,
-      username: "user1",
-      fullName: "User One",
-      password: "password1",
-      address1: "123 Main St",
-      address2: "",
-      city: "City1",
-      state: "State1",
-      zipCode: "12345",
+      username: 'user1',
+      fullName: 'User One',
+      password: 'password1',
+      address1: '123 Main St',
+      address2: '',
+      city: 'City1',
+      state: 'State1',
+      zipCode: '12345',
     },
     // Add more user data as needed
   ]);
@@ -21,14 +21,14 @@ const ProfileTable = () => {
   // State to track which rows are in edit mode
   const [editingRows, setEditingRows] = useState<number[]>([]);
   const [newUser, setNewUser] = useState({
-    username: "",
-    fullName: "",
-    password: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zipCode: "",
+    username: '',
+    fullName: '',
+    password: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zipCode: '',
   });
 
   // Function to toggle edit mode for a specific row
@@ -57,14 +57,14 @@ const ProfileTable = () => {
       { id: prevUsers.length + 1, ...newUser },
     ]);
     setNewUser({
-      username: "",
-      fullName: "",
-      password: "",
-      address1: "",
-      address2: "",
-      city: "",
-      state: "",
-      zipCode: "",
+      username: '',
+      fullName: '',
+      password: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zipCode: '',
     });
   };
 
@@ -113,7 +113,7 @@ const ProfileTable = () => {
                       type="text"
                       value={user.username}
                       onChange={(e) =>
-                        saveData(user.id, "username", e.target.value)
+                        saveData(user.id, 'username', e.target.value)
                       }
                       className="admin-input"
                     />
@@ -129,7 +129,7 @@ const ProfileTable = () => {
                       type="text"
                       value={user.fullName}
                       onChange={(e) =>
-                        saveData(user.id, "fullName", e.target.value)
+                        saveData(user.id, 'fullName', e.target.value)
                       }
                       className="admin-input"
                     />
@@ -145,7 +145,7 @@ const ProfileTable = () => {
                       type="password"
                       value={user.password}
                       onChange={(e) =>
-                        saveData(user.id, "password", e.target.value)
+                        saveData(user.id, 'password', e.target.value)
                       }
                       className="admin-input"
                     />
@@ -161,7 +161,7 @@ const ProfileTable = () => {
                       type="text"
                       value={user.address1}
                       onChange={(e) =>
-                        saveData(user.id, "address1", e.target.value)
+                        saveData(user.id, 'address1', e.target.value)
                       }
                       className="admin-input"
                     />
@@ -177,7 +177,7 @@ const ProfileTable = () => {
                       type="text"
                       value={user.address2}
                       onChange={(e) =>
-                        saveData(user.id, "address2", e.target.value)
+                        saveData(user.id, 'address2', e.target.value)
                       }
                       className="admin-input"
                     />
@@ -193,7 +193,7 @@ const ProfileTable = () => {
                       type="text"
                       value={user.city}
                       onChange={(e) =>
-                        saveData(user.id, "city", e.target.value)
+                        saveData(user.id, 'city', e.target.value)
                       }
                       className="admin-input"
                     />
@@ -209,7 +209,7 @@ const ProfileTable = () => {
                       type="text"
                       value={user.state}
                       onChange={(e) =>
-                        saveData(user.id, "state", e.target.value)
+                        saveData(user.id, 'state', e.target.value)
                       }
                       className="admin-input"
                     />
@@ -225,7 +225,7 @@ const ProfileTable = () => {
                       type="text"
                       value={user.zipCode}
                       onChange={(e) =>
-                        saveData(user.id, "zipCode", e.target.value)
+                        saveData(user.id, 'zipCode', e.target.value)
                       }
                       className="admin-input"
                     />
@@ -241,7 +241,7 @@ const ProfileTable = () => {
                       onClick={(e) =>
                         saveData(
                           user.id,
-                          "username",
+                          'username',
                           (e.target as HTMLInputElement).value,
                         )
                       }

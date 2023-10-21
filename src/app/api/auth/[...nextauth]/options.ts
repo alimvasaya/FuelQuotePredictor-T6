@@ -1,76 +1,76 @@
-import type { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import ToasterContext from "@/app/context/ToasterContext";
-import toast, { Toaster } from "react-hot-toast";
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { compare } from 'bcryptjs';
+import { connectMongo } from '../../../../../server/mongodb';
+import UserCredentials from '../../../../../server/models/UsersModel/UserCredentials.model';
 
 export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
         email: {
-          label: "Email",
-          type: "text",
-          placeholder: "Email",
+          label: 'Email',
+          type: 'text',
+          placeholder: 'Email',
         },
         password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Password",
+          label: 'Password',
+          type: 'password',
+          placeholder: 'Password',
         },
       },
       async authorize(credentials) {
-        // Fetch user data here => dummy data
-        const user = {
-          id: "1",
-          email: "johnsmith@gmail.com",
-          password: "js",
-          role: "client", // change between admin and client for testing
-        };
+        await connectMongo();
 
-        // Check if email and password is entered
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Please enter an email and password");
+        const user = await UserCredentials.findOne({
+          email: credentials?.email,
+        }).select('+password');
+
+        if (!user) {
+          throw new Error('Incorrect credentials');
         }
 
-        // Check if user exists
-        // if (!user) {
-        //   throw new Error("No user found");
-        // }
+        const correctPass = await compare(credentials!.password, user.password);
 
-        // Check if credentials match => use bcrypt
-        if (
-          credentials?.email === user.email &&
-          credentials?.password === user.password
-        ) {
-          return user;
+        if (correctPass === false) {
+          throw new Error('Incorrect credentials');
         } else {
-          throw new Error("Incorrect credentials");
+          return user;
         }
       },
     }),
   ],
-  pages: {
-    signIn: "/auth/SignForm",
-    signOut: "/auth/signout",
-    error: "http://localhost:3000",
-    newUser: "/clietPage/completeProfile/page",
-  },
+
+  secret: process.env.NEXTAUTH_SECRET,
+
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
+
+  pages: {
+    signIn: '/auth/SignForm',
+    signOut: '/auth/signout',
+    error: '/',
+    newUser: '/clientPage/completeProfile/page',
+  },
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
+        token.id = user.id;
         token.email = user.email;
+        token.role = user.role;
+        token.dataCompleted = user.dataCompleted;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.role = token.role;
+        session.user.id = token.id;
         session.user.email = token.email;
+        session.user.role = token.role;
+        session.user.dataCompleted = token.dataCompleted;
       }
       return session;
     },

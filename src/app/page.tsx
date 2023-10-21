@@ -1,10 +1,10 @@
-import { options } from "./api/auth/[...nextauth]/options";
-import { getServerSession } from "next-auth";
-import { UserProvider } from "@/app/context/UserContext";
+import { options } from './api/auth/[...nextauth]/options';
+import { getServerSession } from 'next-auth';
+import { UserProvider } from '@/app/context/UserContext';
 
-import ClientPage from "@/app/clientPage/page";
-import AdminPage from "@/app/adminPage/page";
-import PreAuth from "./components/Pages/PreAuth";
+import ClientPage from '@/app/clientPage/page';
+import AdminPage from '@/app/adminPage/page';
+import PreAuth from './components/Pages/PreAuth';
 
 export default async function Home() {
   let rolePage: React.JSX.Element = (
@@ -22,13 +22,13 @@ export default async function Home() {
       </UserProvider>
     );
   }
-  if (session?.user.role === "client") {
+  if (session?.user.role === 'client') {
     rolePage = (
       <UserProvider>
         <ClientPage />
       </UserProvider>
     );
-  } else if (session?.user.role === "admin") {
+  } else if (session?.user.role === 'admin') {
     rolePage = (
       <UserProvider>
         <AdminPage />

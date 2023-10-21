@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { processResponse } from "../../middleware/requestRouter";
-import { findUser } from "./findUser";
+import { Request, Response } from 'express';
+import { processResponse } from '../../middleware/requestRouter';
+import { findUser } from './findUser';
 
 export const viewProfile = async (req: Request, res: Response) => {
   try {
@@ -10,9 +10,9 @@ export const viewProfile = async (req: Request, res: Response) => {
       console.log(client);
       processResponse(client, res);
     } else {
-      console.error("Fetch user profile failed");
+      console.error('Fetch user profile failed');
     }
   } catch (err) {
-    console.error("Server error ", err);
+    console.error('Server error ', err);
   }
 };

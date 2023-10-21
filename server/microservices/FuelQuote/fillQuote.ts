@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { processResponse } from "../../middleware/requestRouter";
-import { findUser } from "../Users/findUser";
-import { findQuote } from "./findQuote";
+import { Request, Response } from 'express';
+import { processResponse } from '../../middleware/requestRouter';
+import { findUser } from '../Users/findUser';
+import { findQuote } from './findQuote';
 
 export const fillQuote = async (req: Request, res: Response) => {
   try {
@@ -21,9 +21,9 @@ export const fillQuote = async (req: Request, res: Response) => {
       };
       processResponse(toSend, res);
     } else {
-      console.error("Retrieve data failed");
+      console.error('Retrieve data failed');
     }
   } catch (err) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };

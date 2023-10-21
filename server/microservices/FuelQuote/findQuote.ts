@@ -1,12 +1,12 @@
-import { fuelQuoteData } from "../../models/QuoteModel/FuelQuote.model";
+import { fuelQuoteData } from '../../models/QuoteModel/FuelQuote.model';
 
 export const findQuote = async (userId: any) => {
   for (const quote of fuelQuoteData) {
     if (quote.userId === userId) {
-      console.log("Found user quote", quote.userId);
+      console.log('Found user quote', quote.userId);
       return quote;
     }
   }
-  console.error("No user found");
+  console.error('No user found');
   return null;
 };

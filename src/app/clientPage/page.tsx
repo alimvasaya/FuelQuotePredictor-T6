@@ -1,27 +1,26 @@
-"use client";
-import React from "react";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import { useSession } from "next-auth/react";
+'use client';
+import React from 'react';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import { useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
 
-import Home from "../page";
-import HeaderAuth from "../components/Headers/HeaderAuth";
-import CompleteProfile from "./completeProfile/page";
-import QuoteForm from "./requestQuote/page";
-import QuoteHistory from "./quoteHistory/page";
-import Profile from "./clientProfile/page";
-// import ViewProfile from "./clientProfile/ViewProfile";
+import HeaderAuth from '../components/Headers/HeaderAuth';
+import CompleteProfile from './completeProfile/page';
+import QuoteForm from './requestQuote/page';
+import QuoteHistory from './quoteHistory/page';
+import Profile from './clientProfile/page';
 
 const ClientPage = () => {
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
-      return <a href="api/auth/signForm"></a>;
+      return;
     },
   });
 
-  if (!session) return;
-
-  if (status === "authenticated" && session.user.role === "client") {
+  if (status === 'authenticated' && session.user.role === 'client') {
+    toast.success('Welcome!');
+    console.log(session.user);
     return (
       <Router>
         <div>
@@ -29,10 +28,10 @@ const ClientPage = () => {
             <Link to="/Client"></Link>
             <HeaderAuth />
           </nav>
-          {/* <CompleteProfile data={session} /> */}
+          <CompleteProfile />
 
           <Routes>
-            {/* <Route path="/completeProfile" element={<CompleteProfile />} /> */}
+            <Route path="/completeProfile" element={<CompleteProfile />} />
             <Route
               path="/requestQuote"
               element={<QuoteForm data={session} />}

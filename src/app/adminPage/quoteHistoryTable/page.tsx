@@ -1,18 +1,18 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 
 const QuoteHistoryTable = () => {
   // Sample data for the table
   const [quoteHistory, setQuoteHistory] = useState([
     {
       QuoteHistoryID: 1,
-      Username: "User1",
+      Username: 'User1',
       GallonsRequested: 100,
       CompanyProfitMargin: 0.2,
     },
     {
       QuoteHistoryID: 2,
-      Username: "User2",
+      Username: 'User2',
       GallonsRequested: 200,
       CompanyProfitMargin: 0.15,
     },
@@ -87,7 +87,7 @@ const QuoteHistoryTable = () => {
                         onChange={(e) =>
                           saveData(
                             item.QuoteHistoryID,
-                            "Username",
+                            'Username',
                             e.target.value,
                           )
                         }
@@ -110,7 +110,7 @@ const QuoteHistoryTable = () => {
                       onChange={(e) =>
                         saveData(
                           item.QuoteHistoryID,
-                          "GallonsRequested",
+                          'GallonsRequested',
                           e.target.value,
                         )
                       }
@@ -129,7 +129,7 @@ const QuoteHistoryTable = () => {
                       onChange={(e) =>
                         saveData(
                           item.QuoteHistoryID,
-                          "CompanyProfitMargin",
+                          'CompanyProfitMargin',
                           e.target.value,
                         )
                       }
@@ -146,7 +146,7 @@ const QuoteHistoryTable = () => {
                     className="admin-butoon border-yellow-500/50 bg-yellow-500/50
                     hover:border-yellow-500/70 hover:bg-yellow-500/70"
                   >
-                    {editingRows[item.QuoteHistoryID] ? "Save" : "Edit"}
+                    {editingRows[item.QuoteHistoryID] ? 'Save' : 'Edit'}
                   </button>
                 </td>
               </tr>

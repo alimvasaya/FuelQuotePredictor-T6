@@ -1,57 +1,50 @@
-/* General Idea of Middleware and Microservice:
-frontend -> microservice (encapsulation)
-middleware accepts all requests from client side
-route request to a microservice associated with its route
-each microservice has one purpose of its own
-*/
+import { registerUser } from '../microservices/Users/registerUser';
+import { completeProfile } from '../microservices/Users/completeProfile';
+// import { viewProfile } from '../microservices/Users/viewProfile';
+// import { editProfile } from '../microservices/Users/editProfile';
 
-import { registerUser } from "../microservices/Users/registerUser";
-import { completeProfile } from "../microservices/Users/completeProfile";
-import { viewProfile } from "../microservices/Users/viewProfile";
-import { editProfile } from "../microservices/Users/editProfile";
+// import { fillQuote } from '../microservices/FuelQuote/fillQuote';
+// import { addQuote } from '../microservices/FuelQuote/addQuote';
+// import { viewQuotes } from '../microservices/FuelQuote/viewQuotes';
 
-import { fillQuote } from "../microservices/FuelQuote/fillQuote";
-import { addQuote } from "../microservices/FuelQuote/addQuote";
-import { viewQuotes } from "../microservices/FuelQuote/viewQuotes";
-
-import express, { Request, Response } from "express";
+import express, { Request, Response } from 'express';
 
 const router = express.Router();
 
 export const createRoute = () => {
   // User profile
-  router.post("/signUp", (req: Request, res: Response) => {
+  router.post('/signUp', (req: Request, res: Response) => {
     registerUser(req, res); // Handle registering new user
   });
 
-  router.post("/completeProfile", (req: Request, res: Response) => {
+  router.post('/completeProfile', (req: Request, res: Response) => {
     completeProfile(req, res); // Handle new profile completion for new user
   });
 
-  router.post("/viewProfile", (req: Request, res: Response) => {
-    viewProfile(req, res); // Handle registering new user
-  });
+  // router.post('/viewProfile', (req: Request, res: Response) => {
+  //   viewProfile(req, res); // Handle registering new user
+  // });
 
-  router.post("/editProfile", (req: Request, res: Response) => {
-    editProfile(req, res); // Handle registering new user
-  });
+  // router.post('/editProfile', (req: Request, res: Response) => {
+  //   editProfile(req, res); // Handle registering new user
+  // });
 
   // Quote interactions
-  router.post("/fillQuote", (req: Request, res: Response) => {
-    fillQuote(req, res); // Handle retrieving pre-fill quote info
-  });
+  // router.post('/fillQuote', (req: Request, res: Response) => {
+  //   fillQuote(req, res); // Handle retrieving pre-fill quote info
+  // });
 
-  router.post("/addQuote", (req: Request, res: Response) => {
-    addQuote(req, res); // Handle creating new fuel quotes
-  });
+  // router.post('/addQuote', (req: Request, res: Response) => {
+  //   addQuote(req, res); // Handle creating new fuel quotes
+  // });
 
-  router.post("/viewQuotes", (req: Request, res: Response) => {
-    viewQuotes(req, res); // Handle viewing existing fuel quotes
-  });
+  // router.post('/viewQuotes', (req: Request, res: Response) => {
+  //   viewQuotes(req, res); // Handle viewing existing fuel quotes
+  // });
   return router;
 };
 
-export const processResponse = (user: any, res: any) => {
+export const processResponse = (user: any, res: Response) => {
   res.send(user);
-  console.log("processResponse: ", user);
+  console.log('processResponse: ', user);
 };

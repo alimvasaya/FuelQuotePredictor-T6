@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { processResponse } from "../../middleware/requestRouter";
-import { findUser } from "../Users/findUser";
-import { findQuote } from "./findQuote";
+import { Request, Response } from 'express';
+import { processResponse } from '../../middleware/requestRouter';
+import { findUser } from '../Users/findUser';
+import { findQuote } from './findQuote';
 
 export const viewQuotes = async (req: Request, res: Response) => {
   try {
@@ -11,9 +11,9 @@ export const viewQuotes = async (req: Request, res: Response) => {
     if (quote != null) {
       processResponse(quote.quoteHistory, res);
     } else {
-      console.error("Fetch history failed");
+      console.error('Fetch history failed');
     }
   } catch (err) {
-    console.error("Server error ", err);
+    console.error('Server error ', err);
   }
 };
