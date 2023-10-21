@@ -1,14 +1,14 @@
-'use client';
-import React from 'react';
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-import { useSession } from 'next-auth/react';
-import toast from 'react-hot-toast';
+"use client";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
-import HeaderAuth from '../components/Headers/HeaderAuth';
-import CompleteProfile from './completeProfile/page';
-import QuoteForm from './requestQuote/page';
-import QuoteHistory from './quoteHistory/page';
-import Profile from './clientProfile/page';
+import HeaderAuth from "../components/Headers/HeaderAuth";
+import CompleteProfile from "./completeProfile/page";
+import QuoteForm from "./requestQuote/page";
+import QuoteHistory from "./quoteHistory/page";
+import Profile from "./clientProfile/page";
 
 const ClientPage = () => {
   const { data: session, status } = useSession({
@@ -18,9 +18,11 @@ const ClientPage = () => {
     },
   });
 
-  if (status === 'authenticated' && session.user.role === 'client') {
-    toast.success('Welcome!');
-    console.log(session.user);
+  useEffect(() => {
+    toast.success("Welcome!");
+  }, []);
+
+  if (status === "authenticated" && session.user.role === "client") {
     return (
       <Router>
         <div>

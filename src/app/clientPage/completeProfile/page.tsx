@@ -1,29 +1,37 @@
-'use client';
-import React, { useRef, useEffect, useState, MouseEventHandler } from 'react';
-import { useSession } from 'next-auth/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
-import toast from 'react-hot-toast';
+"use client";
+import React, { useRef, useEffect, useState, MouseEventHandler } from "react";
+import { useSession } from "next-auth/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import toast from "react-hot-toast";
 
 type Props = {};
 
-const localHost = 'http://localhost:8000';
+const localHost = "http://localhost:8000";
 
 export default function ProfileForm({}: Props) {
+  const profileRef = useRef<HTMLDivElement>(null);
   const session = useSession();
 
   // Hide form if returning user
-  const profileRef = useRef<HTMLDivElement>(null);
-
   function hideProfileForm() {
     if (profileRef.current == null) return;
-    profileRef.current.style.display = 'none';
-    profileRef.current.style.opacity = '0';
+    profileRef.current.style.display = "none";
+    profileRef.current.style.flexDirection = "";
+    profileRef.current.style.opacity = "0";
+  }
+
+  // Load form if new user
+  function loadProfileForm() {
+    if (profileRef.current == null) return;
+    profileRef.current.style.display = "flex";
+    profileRef.current.style.flexDirection = "column";
+    profileRef.current.style.opacity = "1";
   }
 
   useEffect(() => {
-    if (session.data?.user.dataCompleted === true) {
-      hideProfileForm();
+    if (session.data?.user.dataCompleted === false) {
+      loadProfileForm();
     }
   }, []);
 
@@ -31,12 +39,12 @@ export default function ProfileForm({}: Props) {
   const [userData, setUserData] = useState({
     userId: session.data?.user.id,
     email: session.data?.user.email,
-    name: '',
-    address1: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    address2: '',
+    name: "",
+    address1: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    address2: "",
   });
 
   // Handle requestQuote Submission
@@ -46,18 +54,18 @@ export default function ProfileForm({}: Props) {
     e.preventDefault();
 
     const res = await fetch(`${localHost}/api/completeProfile`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
     })
       .then(() => {
-        toast.success('Completed profile successfully');
+        toast.success("Completed profile successfully");
         hideProfileForm();
       })
       .catch((err) => {
-        toast.error('Profile completion failed');
+        toast.error("Profile completion failed");
         console.error(err);
       });
   };
@@ -65,7 +73,7 @@ export default function ProfileForm({}: Props) {
   return (
     <div
       ref={profileRef}
-      className="flex flex-col items-center justify-center pt-32"
+      className="hidden items-center justify-center pt-32 transition-opacity duration-700"
     >
       <h1 className="text-3xl font-semibold uppercase tracking-widest text-white">
         Complete Profile
@@ -73,7 +81,7 @@ export default function ProfileForm({}: Props) {
 
       <FontAwesomeIcon
         icon={faUser}
-        style={{ color: '#6366f1' }}
+        style={{ color: "#6366f1" }}
         className="relative mx-auto mt-8 h-36 w-36"
       />
 

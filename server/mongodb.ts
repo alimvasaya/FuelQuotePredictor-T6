@@ -1,25 +1,21 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const connectMongo = async () => {
   try {
-    const { connection } = await mongoose.connect(
-      'mongodb+srv://team6:wkZ8P5Rc9ltPtqVb@team6cluster.ypinp8k.mongodb.net/?retryWrites=true&w=majority',
-    );
+    const { connection } = await mongoose.connect(process.env.MONGODB_URI);
 
     if (connection.readyState === 1) {
-      console.log('Database connected');
+      console.log("Database connected");
       return Promise.resolve(true);
     }
   } catch (error) {
-    console.error('Database connection failed');
+    console.error("Database connection failed");
     return Promise.reject(error);
   }
 };
 
 // const { MongoClient, ServerApiVersion } = require('mongodb');
 // const uri =
-//   'mongodb+srv://team6:wkZ8P5Rc9ltPtqVb@team6cluster.ypinp8k.mongodb.net/?retryWrites=true&w=majority';
-
 // // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 // const client = new MongoClient(uri, {
 //   serverApi: {
