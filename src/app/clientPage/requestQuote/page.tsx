@@ -1,9 +1,10 @@
 "use client";
-import React, {
+import React, { 
   useEffect,
   useState,
   ChangeEventHandler,
   MouseEventHandler,
+  use,
 } from "react";
 import { Session } from "next-auth";
 import toast from "react-hot-toast";
@@ -12,60 +13,71 @@ type DataProps = {
   data: Session;
 };
 
-export default function QuoteForm({ data }: DataProps) {
+export default function QuoteForm({data}: DataProps) {
   const [userData, setUserdata] = useState({
-    userId: "",
-    email: data.user.email,
+    email:data.user.email,
     address1: "",
     address2: "",
     city: "",
-    state: "",
+    state: "",  
     zipcode: "",
     gallonsRequested: "",
     deliveryDate: "",
+    hashistory: false,
     suggestedPrice: "",
     totalPrice: "", // Use a default value here
   });
 
   // Fetch address
   const fetchAddress = () => {
-    fetch("http://localhost:8000/api/fillQuote", {
-      method: "POST",
+    fetch(`http://localhost:8000/api/fillQuote/${data.user.id}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: userData.email }),
     })
-      .then((res) => res.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+      return response.json();
+    })
       .then((data) => {
-        console.log("Fetch address sucessfully ", data);
-        setUserdata(data);
+        if (data) {
+          setUserdata({
+            ...userData,
+            address1: data.address1,
+            address2: data.address2,
+            city: data.city,
+            state: data.state,
+            zipcode: data.zipcode,
+            hashistory: data.hashistory,
+          });
+          console.log("Fetch address successfully ");
+        } else {
+          console.error("Data not found in response");
+        }
       })
-      .catch((error) => {
-        console.error("Fetch address failed ", error);
-      });
   };
 
   useEffect(() => {
     fetchAddress();
   }, []);
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
 
   // Pricing module
   const calculateTotalPrice: ChangeEventHandler<HTMLInputElement> = (e) => {
     e.preventDefault();
 
     const gallons = parseFloat(e.target.value);
-    const suggestedPrice = parseFloat(userData.suggestedPrice);
+    const suggestedPrice = 2.9;
 
     if (!isNaN(gallons) && !isNaN(suggestedPrice)) {
       const total = gallons * suggestedPrice;
       setUserdata({
         ...userData,
         gallonsRequested: e.target.value,
+        suggestedPrice: suggestedPrice.toString(),
         totalPrice: total.toString(),
       });
 
@@ -81,16 +93,21 @@ export default function QuoteForm({ data }: DataProps) {
   const handleQuoteRequested: MouseEventHandler<HTMLButtonElement> = async (
     e,
   ) => {
-    e.preventDefault;
+    e.preventDefault();
 
-    const res = await fetch("http://localhost:8000/api/addQuote", {
+    const res = await fetch(`http://localhost:8000/api/addQuote/${data.user.id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
     })
-      .then((res) => res.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+      return response.json();
+    })
       .then((data) => {
         toast.success("Requested quote successfully");
         console.log("Requested quote successfully ", data);
@@ -98,6 +115,7 @@ export default function QuoteForm({ data }: DataProps) {
           ...userData,
           gallonsRequested: "",
           deliveryDate: "",
+          suggestedPrice: "",
           totalPrice: "",
         });
       })

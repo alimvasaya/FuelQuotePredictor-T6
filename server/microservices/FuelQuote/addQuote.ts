@@ -1,10 +1,18 @@
 import { Request, Response } from 'express';
 import { processResponse } from '../../middleware/requestRouter';
-import { findQuote } from './findQuote';
+// import ClientData from '../../models/UsersModel/ClientData.model';
+import QuoteHistory  from '../../models/QuoteModel/QuoteHistory.model';
+import { connectMongo } from '../../mongodb';
 
 export const addQuote = async (req: Request, res: Response) => {
   try {
-    const newQuote = {
+    await connectMongo();
+    const clientID = req.params.userId
+    const fuel = await QuoteHistory.findOne({clientID: clientID}).exec();
+
+
+    const newQuote = new QuoteHistory({
+      clientID: clientID,
       gallonsRequested: parseFloat(req.body.gallonsRequested),
       deliveryDate: req.body.deliveryDate,
       suggestedPrice: parseFloat(req.body.suggestedPrice),
@@ -16,18 +24,16 @@ export const addQuote = async (req: Request, res: Response) => {
         state: req.body.state,
         zipcode: parseFloat(req.body.zipcode),
       },
-    };
-
-    const fuel = await findQuote(req.body.userID);
-
-    if (fuel != null) {
-      fuel.quoteHistory.push(newQuote);
-      fuel.hasHistory = true;
-      processResponse(fuel.quoteHistory, res);
+    });
+    if (fuel !== null) {
+      newQuote.save();
+      processResponse(newQuote, res);
     } else {
-      console.error('Request quote failed');
+      console.error('Request quote failed server');
     }
   } catch (err) {
-    return res.status(400).json({ err });
+    console.error('Error in addQuote:', err);
+    return res.status(400).json({ error: 'An error occurred' });
   }
 };
+
