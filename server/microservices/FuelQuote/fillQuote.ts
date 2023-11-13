@@ -12,7 +12,6 @@ export const fillQuote = async (req: Request, res: Response) => {
     const hashistory = !!fuel;
     const client = await ClientData.findOne({ userId: req.params.userId }).exec();
     
-
     if (client != null) {
       const toSend = {
         address1: client.address1,

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 export const connectMongo = async () => {
   try {
     const { connection } = await mongoose.connect(
-      'mongodb+srv://team6:wkZ8P5Rc9ltPtqVb@team6cluster.ypinp8k.mongodb.net/?retryWrites=true&w=majority',
+      'mongodb+srv://team6:ME8jiPEboRWXDiPd@team6cluster.ypinp8k.mongodb.net/?retryWrites=true&w=majority',
     );
 
     if (connection.readyState === 1) {

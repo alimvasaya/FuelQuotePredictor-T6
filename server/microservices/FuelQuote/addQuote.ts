@@ -6,10 +6,10 @@ import { connectMongo } from '../../mongodb';
 
 export const addQuote = async (req: Request, res: Response) => {
   try {
+    if(req.body.status === "Authenticated")
     await connectMongo();
     const clientID = req.params.userId
     const fuel = await QuoteHistory.findOne({clientID: clientID}).exec();
-
 
     const newQuote = new QuoteHistory({
       clientID: clientID,
@@ -24,6 +24,7 @@ export const addQuote = async (req: Request, res: Response) => {
         state: req.body.state,
         zipcode: parseFloat(req.body.zipcode),
       },
+    
     });
     if (fuel !== null) {
       newQuote.save();

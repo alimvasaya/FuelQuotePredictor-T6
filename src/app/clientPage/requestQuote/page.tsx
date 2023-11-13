@@ -4,44 +4,72 @@ import React, {
   useState,
   ChangeEventHandler,
   MouseEventHandler,
-  use,
 } from "react";
 import { Session } from "next-auth";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 type DataProps = {
   data: Session;
 };
 
-export default function QuoteForm({data}: DataProps) {
+export default function QuoteForm({ data }: DataProps) {
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      // Redirect or show an error message to the user
+      return;
+    },
+  });
+
+  useEffect(() => {
+    toast.success("Welcome!");
+  }, []);
+
+  if (status !== "authenticated" || (session && session.user.role !== "client")) {
+    // Check if the user is not authenticated or not a client
+    // You can handle this case here, such as showing an error message or redirecting the user
+    return (
+      <div>
+        You must be logged in as a client to access this feature.
+      </div>
+    );
+  }
+
   const [userData, setUserdata] = useState({
-    email:data.user.email,
+    email: data.user.email,
+    status: status,
     address1: "",
     address2: "",
     city: "",
-    state: "",  
+    state: "",
     zipcode: "",
     gallonsRequested: "",
     deliveryDate: "",
-    hashistory: false,
+    hashistory: "",
     suggestedPrice: "",
     totalPrice: "", // Use a default value here
   });
 
   // Fetch address
   const fetchAddress = () => {
+    if (status !== "authenticated") {
+      // User is not authenticated, don't make the request
+      return;
+    }
+
     fetch(`http://localhost:8000/api/fillQuote/${data.user.id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Request failed with status: ${response.status}`);
-      }
-      return response.json();
-    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Request failed with status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         if (data) {
           setUserdata({
@@ -57,23 +85,39 @@ export default function QuoteForm({data}: DataProps) {
         } else {
           console.error("Data not found in response");
         }
-      })
+      });
   };
 
   useEffect(() => {
     fetchAddress();
-  }, []);
+  }, [status]); // Rerun when the authentication status changes
 
 
   // Pricing module
   const calculateTotalPrice: ChangeEventHandler<HTMLInputElement> = (e) => {
     e.preventDefault();
 
+    if (status !== "authenticated") {
+      // User is not authenticated, don't calculate the price
+      return;
+    }
+
     const gallons = parseFloat(e.target.value);
-    const suggestedPrice = 2.9;
+    const state = userData.state; 
+    let currentPrice = 1.50;
+    const locationfactor = state === "TX" ? 0.02 : 0.04;
+    const ratehistoryfactor = userData.hashistory === "1" ? 0.01 : 0.00;
+    const gallonsRequestedfactor = gallons > 1000 ? 0.02 : 0.03;
+    const companyProfitfactor = 0.1;
+
+
+    const margin = currentPrice * (locationfactor - ratehistoryfactor + gallonsRequestedfactor + companyProfitfactor);
+    const suggestedPrice = currentPrice + margin;
 
     if (!isNaN(gallons) && !isNaN(suggestedPrice)) {
       const total = gallons * suggestedPrice;
+
+
       setUserdata({
         ...userData,
         gallonsRequested: e.target.value,
@@ -89,41 +133,55 @@ export default function QuoteForm({data}: DataProps) {
     }
   };
 
-  // Handle requestQuote submission
-  const handleQuoteRequested: MouseEventHandler<HTMLButtonElement> = async (
-    e,
-  ) => {
-    e.preventDefault();
 
-    const res = await fetch(`http://localhost:8000/api/addQuote/${data.user.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
+  // Handle requestQuote submission
+const handleQuoteRequested: MouseEventHandler<HTMLButtonElement> = async (e) => {
+  e.preventDefault();
+
+  if (status !== "authenticated") {
+    // User is not authenticated, don't make the request
+    return;
+  }
+
+  // Check if any of the required fields are empty
+  if (
+    userData.gallonsRequested.trim() === "" ||
+    userData.deliveryDate.trim() === ""
+  ) {
+    // Show an error message or perform the desired action
+    toast.error("Please fill in all required fields.");
+    return;
+  }
+
+  const res = await fetch(`http://localhost:8000/api/addQuote/${data.user.id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  })
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);
       }
       return response.json();
     })
-      .then((data) => {
-        toast.success("Requested quote successfully");
-        console.log("Requested quote successfully ", data);
-        setUserdata({
-          ...userData,
-          gallonsRequested: "",
-          deliveryDate: "",
-          suggestedPrice: "",
-          totalPrice: "",
-        });
-      })
-      .catch((error) => {
-        toast.error("Request quote failed");
-        console.error("Request quote failed ", error);
+    .then((data) => {
+      toast.success("Requested quote successfully");
+      console.log("Requested quote successfully ", data);
+      setUserdata({
+        ...userData,
+        gallonsRequested: "",
+        deliveryDate: "",
+        suggestedPrice: "",
+        totalPrice: "",
       });
-  };
+    })
+    .catch((error) => {
+      toast.error("Request quote failed");
+      console.error("Request quote failed ", error);
+    });
+};
 
   return (
     <section className="flex flex-col items-center justify-center pt-32">
@@ -167,7 +225,7 @@ export default function QuoteForm({data}: DataProps) {
         <p className="pre-filled">$ {userData.totalPrice}</p>
       </form>
       <button onClick={handleQuoteRequested} className="butoon mt-2 w-80">
-        Submit
+        Get Quote
       </button>
     </section>
   );
