@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,7 +17,7 @@ import QuoteForm from '../components/requestQuote/page';
 import CheckSupportTickets from './supportTickets/page';
 
 const AdminPage = () => {
-  const { data: session } = useSession({
+  const { data: session, status} = useSession({
     required: true,
     onUnauthenticated() {
       return 'Unauthenticated';
@@ -25,7 +25,7 @@ const AdminPage = () => {
   });
 
   if (!session) return;
-
+  if (status === "authenticated" && session.user.role === "admin") {
   return (
     <Router>
       <div>
@@ -35,7 +35,7 @@ const AdminPage = () => {
         </nav>
 
         <Routes>
-          <Route path="/historyTable" element={<QuoteHistoryTable />} />
+          <Route path="/historyTable" element={<QuoteHistoryTable data={session} />} />
           <Route path="/profileTable" element={<ProfileTable />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/quoteForm" element={<QuoteForm />} />
@@ -44,6 +44,7 @@ const AdminPage = () => {
       </div>
     </Router>
   );
+}
 };
 
 export default AdminPage;
