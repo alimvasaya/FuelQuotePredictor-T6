@@ -1,50 +1,27 @@
-'use client';
-import React, {useEffect, useState } from 'react';
-import { Session } from 'next-auth';
+"use client";
+import React, { useState } from 'react';
 
-type DataProps = {
-  data: Session;
-};
+const QuoteHistoryTable = () => {
+  // Sample data for the table
+  const [quoteHistory, setQuoteHistory] = useState([
+    {
+      QuoteHistoryID: 1,
+      Username: 'User1',
+      GallonsRequested: 100,
+      CompanyProfitMargin: 0.2,
+    },
+    {
+      QuoteHistoryID: 2,
+      Username: 'User2',
+      GallonsRequested: 200,
+      CompanyProfitMargin: 0.15,
+    },
+    // Add more data as needed
+  ]);
 
-type Quote = {
-  clientID: string;
-  userId: string;
-  deliveryDate: string;
-  deliveryAddress: {
-    address1: string;
-    address2: string;
-    city: string;
-    state: string;
-    zipcode: number;
-  };
-  profit : number;
-  totalPrice: number;
-  currentPrice: number;
-  suggestedPrice: number;
-  gallonsRequested: number;
-};
-
-const QuoteHistoryTable = ({ data }: DataProps) => {
-  const [quoteHistory, setQuoteHistory] = useState<Quote[]>([]);
-  const [editingRows, setEditingRows] = useState<{ [key: number]: boolean }>({});
-  const [searchEmail, setSearchEmail] = useState<string>('');
-
-  // Function to fetch all client history (replace this with your actual data fetching logic)
-  const fetchAllClientHistory = async () => {
-    // Example: Replace this with your actual API call
-    const response = await fetch('/api/client/history');
-    const data = await response.json();
-    setQuoteHistory(data);
-  };
-
-  // Fetch all client history on component mount
-  useEffect(() => {
-    fetchAllClientHistory();
-  }, []);
-
-  // Function to filter client history based on searchEmail
-  const filteredHistory = quoteHistory.filter((item) =>
-    item.Username.toLowerCase().includes(searchEmail.toLowerCase())
+  // State to track which rows are being edited
+  const [editingRows, setEditingRows] = useState<{ [key: number]: boolean }>(
+    {},
   );
 
   // Function to toggle edit mode for a specific row
@@ -54,7 +31,6 @@ const QuoteHistoryTable = ({ data }: DataProps) => {
       [quoteHistoryID]: !prevState[quoteHistoryID],
     }));
   };
-
   // Function to save edited data for a specific row
   const saveData = (quoteHistoryID: number, field: string, value: string) => {
     // Update the data in the state based on the changes
@@ -67,36 +43,25 @@ const QuoteHistoryTable = ({ data }: DataProps) => {
     );
     toggleEdit(quoteHistoryID); // Turn off editing mode for the row
   };
-
   return (
     <section className="flex flex-col items-center justify-center space-y-8 pt-12">
       <h1 className="text-3xl font-semibold uppercase tracking-widest text-white">
         Client Quote Histories
       </h1>
-      
-      <input type="text" placeholder="Client Email" className="w-1/4 p-2 rounded-lg" />
-      <button className=" bg-white w-1/8 p-2 rounded-lg flex-wrap position-absolute x-10px">Search</button>
-
-      {/* Table */}
 
       <div className="flex w-screen items-center justify-center">
         <table className="w-11/12 table-auto overflow-hidden rounded-lg text-center tracking-wide text-white">
           {/* Table Headers */}
           <thead className="border-b-2 border-slate-900 bg-sky-800/40">
             <tr>
+              <th className="p-3 font-semibold">Fuel Quote History</th>
               <th className="p-3 font-semibold">Username</th>
-              <th className="p-3 font-semibold">Date</th>
               <th className="p-3 font-semibold">QuotehistoryID</th>
-              <th className="p-3 font-semibold">State</th>
               <th className="p-3 font-semibold">Gallons Requested</th>
-              <th className="p-3 font-semibold">Total Price</th>
-              <th className="p-3 font-semibold">Current Price</th>
-              <th className="p-3 font-semibold">Suggested Price</th>
               <th className="p-3 font-semibold">Company Profit Margin</th>
               <th className="p-3 font-semibold">Edit</th>
             </tr>
           </thead>
-
           {/* Table Body */}
           <tbody>
             {quoteHistory.map((item) => (
@@ -105,7 +70,6 @@ const QuoteHistoryTable = ({ data }: DataProps) => {
                 className="border-b-2 border-slate-900 bg-sky-700/60"
               >
                 <td className="p-3">{item.QuoteHistoryID}</td>
-
                 {/* Username or Email */}
                 <td className="p-3">
                   <div
@@ -129,10 +93,8 @@ const QuoteHistoryTable = ({ data }: DataProps) => {
                     )}
                   </div>
                 </td>
-
                 {/* Quote History ID */}
                 <td className="p-2">{item.QuoteHistoryID}</td>
-
                 {/* Gallons */}
                 <td className="p-2">
                   {editingRows[item.QuoteHistoryID] ? (
@@ -151,7 +113,6 @@ const QuoteHistoryTable = ({ data }: DataProps) => {
                     item.GallonsRequested
                   )}
                 </td>
-
                 {/* Profit */}
                 <td className="p-2">
                   {editingRows[item.QuoteHistoryID] ? (
@@ -170,7 +131,6 @@ const QuoteHistoryTable = ({ data }: DataProps) => {
                     item.CompanyProfitMargin
                   )}
                 </td>
-
                 {/* Functionalities */}
                 <td className="p-2">
                   <button
@@ -189,5 +149,4 @@ const QuoteHistoryTable = ({ data }: DataProps) => {
     </section>
   );
 };
-
 export default QuoteHistoryTable;
