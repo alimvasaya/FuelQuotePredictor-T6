@@ -3,6 +3,7 @@ import ClientData from '../../models/UsersModel/ClientData.model';
 import QuoteHistory from '../../models/QuoteModel/QuoteHistory.model';
 import { connectMongo } from '../../mongodb';
 
+
 export const viewQuotes = async (req: Request, res: Response) => {
   try {
     await connectMongo();

@@ -1,10 +1,10 @@
+require('dotenv').config();
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export const connectMongo = async () => {
   try {
+    console.log('MongoDB URI:',process.env.MONGODB_URI);
+
     const { connection } = await mongoose.connect(process.env.MONGODB_URI);
 
     if (connection.readyState === 1) {
