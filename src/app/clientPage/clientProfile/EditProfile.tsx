@@ -212,9 +212,14 @@ export default function ProfileForm({ data, clickViewAnim }: DataProps) {
           className="input-field"
         />
       </form>
-      <button onClick={handleProfileEdit} className="butoon mt-2 w-80">
-        Submit
-      </button>
+      <div className="flex w-full flex-row space-x-2">
+        <button onClick={handleProfileEdit} className="butoon mt-2 w-full">
+          Submit
+        </button>
+        <button onClick={clickViewAnim} className="butoon mt-2 w-full">
+          Back
+        </button>
+      </div>
     </div>
   );
 }
