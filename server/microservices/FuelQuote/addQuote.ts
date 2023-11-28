@@ -1,15 +1,13 @@
 import { Request, Response } from 'express';
 import { processResponse } from '../../middleware/requestRouter';
 // import ClientData from '../../models/UsersModel/ClientData.model';
-import QuoteHistory  from '../../models/QuoteModel/QuoteHistory.model';
+import QuoteHistory from '../../models/QuoteModel/QuoteHistory.model';
 import { connectMongo } from '../../mongodb';
 
 export const addQuote = async (req: Request, res: Response) => {
   try {
-    if(req.body.status === "Authenticated")
-    await connectMongo();
-    const clientID = req.params.userId
-    const fuel = await QuoteHistory.findOne({clientID: clientID}).exec();
+    if (req.body.status === 'Authenticated') await connectMongo();
+    const clientID = req.params.userId;
 
     const newQuote = new QuoteHistory({
       clientID: clientID,
@@ -24,17 +22,12 @@ export const addQuote = async (req: Request, res: Response) => {
         state: req.body.state,
         zipcode: parseFloat(req.body.zipcode),
       },
-    
     });
-    if (fuel !== null) {
-      newQuote.save();
-      processResponse(newQuote, res);
-    } else {
-      console.error('Request quote failed server');
-    }
+
+    newQuote.save();
+    processResponse(newQuote, res);
   } catch (err) {
     console.error('Error in addQuote:', err);
     return res.status(400).json({ error: 'An error occurred' });
   }
 };
-

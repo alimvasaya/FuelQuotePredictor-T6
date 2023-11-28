@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 export const connectMongo = async () => {
   try {
-    console.log('MongoDB URI:',process.env.MONGODB_URI);
+    console.log('MongoDB URI:', process.env.MONGODB_URI);
 
     const { connection } = await mongoose.connect(process.env.MONGODB_URI);
 
@@ -11,7 +11,10 @@ export const connectMongo = async () => {
       console.log('Database connected');
       return Promise.resolve(true);
     } else {
-      console.error('Database connection failed. Connection state:', connection.readyState);
+      console.error(
+        'Database connection failed. Connection state:',
+        connection.readyState,
+      );
       return Promise.reject(new Error('Database connection failed.'));
     }
   } catch (error) {

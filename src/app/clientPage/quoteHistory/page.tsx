@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Session } from 'next-auth';
 import HistCard from './HistCard';
@@ -38,14 +38,22 @@ export default function QuoteHist({ data }: DataProps) {
         return response.json();
       })
       .then((data) => {
-        if (Array.isArray(data.quotes)) { // Update this line
+        if (Array.isArray(data.quotes)) {
+          // Update this line
           // Extract relevant data from the API response
-          const extractedData = data.quotes.map((item: { deliveryDate: any; deliveryAddress: any; totalPrice: any; gallonsRequested: any; }) => ({
-            deliveryDate: item.deliveryDate,
-            deliveryAddress: item.deliveryAddress,
-            totalPrice: item.totalPrice,
-            gallonsRequested: item.gallonsRequested,
-          }));
+          const extractedData = data.quotes.map(
+            (item: {
+              deliveryDate: any;
+              deliveryAddress: any;
+              totalPrice: any;
+              gallonsRequested: any;
+            }) => ({
+              deliveryDate: item.deliveryDate,
+              deliveryAddress: item.deliveryAddress,
+              totalPrice: item.totalPrice,
+              gallonsRequested: item.gallonsRequested,
+            }),
+          );
           setQuoteHistory(extractedData);
         } else {
           // Handle the case where there is no quote history
@@ -68,7 +76,9 @@ export default function QuoteHist({ data }: DataProps) {
       </h1>
 
       <div className="flex w-full flex-col items-center justify-center space-y-2">
-        {quoteHistory && Array.isArray(quoteHistory) && quoteHistory.length > 0 ? (
+        {quoteHistory &&
+        Array.isArray(quoteHistory) &&
+        quoteHistory.length > 0 ? (
           quoteHistory.map((histCard, i) => (
             <HistCard
               key={i}
@@ -82,7 +92,9 @@ export default function QuoteHist({ data }: DataProps) {
             />
           ))
         ) : (
-          <p>No quote history available.</p>
+          <p className="border-b-4 border-indigo-500/50 text-lg text-white">
+            No quote history available.
+          </p>
         )}
       </div>
     </section>
